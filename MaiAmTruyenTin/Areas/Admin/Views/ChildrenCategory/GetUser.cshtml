@@ -1,0 +1,9 @@
+﻿@model List<Model.EF.User>
+
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@if (session != null)
+{
+    @session.Name
+}

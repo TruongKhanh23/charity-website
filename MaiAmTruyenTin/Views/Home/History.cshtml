@@ -1,0 +1,32 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<Model.EF.History>
+@{
+    ViewBag.Title = "LỊCH SỬ HOẠT ĐỘNG MÁI ẤM TRUYỀN TIN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="event-div">
+    <ul class="event-nav">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Danh sách sự kiện
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class='dropdown-item' href='#event1'>Năm thánh lập 1995</a><a class='dropdown-item' href='#event2'>Năm 1998</a><a class='dropdown-item' href='#event3'>Năm 2000</a><a class='dropdown-item' href='#event4'>Năm 2004</a><a class='dropdown-item' href='#event5'>Năm 2005</a><a class='dropdown-item' href='#event6'>Năm 2010</a><a class='dropdown-item' href='#event7'>Năm 2012</a><a class='dropdown-item' href='#event8'>Năm 2015</a><a class='dropdown-item' href='#event9'>Năm 2016</a><a class='dropdown-item' href='#event10'>Năm 2017 - 2018</a><a class='dropdown-item' href='#event11'>Năm 2019</a><a class='dropdown-item' href='#event12'>Năm 2020</a>
+            </div>
+        </div>
+    </ul>
+</div>
+<div class="list-div">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class='event-item' data-aos='fade-up'>
+                    @*<img class='event-img' src='/Assets/client/img/house.jpg' alt='event-img' width='200'>*@
+                    <h1>@item.Name</h1>
+                    <p>@item.Description</p>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

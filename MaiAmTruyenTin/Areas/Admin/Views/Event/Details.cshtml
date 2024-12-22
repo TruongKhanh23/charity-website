@@ -1,0 +1,69 @@
+﻿@model Model.EF.Event
+
+@{
+    ViewBag.Title = "SỰ KIỆN | THÔNG TIN CHI TIẾT";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+.
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">THÔNG TIN SỰ KIỆN</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHI TIẾT SỰ KIỆN @Model.Code: @Model.Name.ToUpper()</h3>
+
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-4 parsley-row">
+                        <a href="@Url.Content(Model.Image.ToString())" data-uk-lightbox="{group:'user-photos'}">
+                            <img src="@Url.Content(Model.Image.ToString())" style="" alt="" />
+                        </a>
+                    </div>
+                    <div class="uk-width-medium-3-4 parsley-row">
+                        <label>Mô tả<span class="req">*</span></label>
+                        <textarea readonly name="Description" id="Description" required class="md-input">@Model.Description</textarea>
+                        <br />
+                        <div class="uk-grid">
+                            <div class="uk-width-medium-1-1 parsley-row">
+                                <label>Thông tin thêm<span class="req">*</span></label>
+                                <input readonly type="text" name="MoreInformation" id="MoreInformation" required class="md-input" value="@Model.MoreInformation" />
+                            </div>
+                        </div>
+                        <div class="uk-grid">
+                            <div class="uk-width-medium-1-2 parsley-row">
+                                <label>Ngày khởi tạo<span class="req">*</span></label>
+                                <input readonly type="text" name="CreatedDate" id="CreatedDate" required class="md-input" value="@Model.CreatedDate" />
+                            </div>
+                            <div class="uk-width-medium-1-2 parsley-row">
+                                <label>Người khởi tạo<span class="req">*</span></label>
+                                <input readonly type="text" name="CreatedBy" id="CreatedBy" required class="md-input" value="@Model.CreatedBy" />
+                            </div>
+                        </div>
+                        <div class="uk-grid">
+                            <div class="uk-width-medium-1-2 parsley-row">
+                                <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                                <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                            </div>
+                            <div class="uk-width-medium-1-2 parsley-row">
+                                <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                                <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{ int eventID = Model.ID;}
+        @Html.Action("ListVolunteerOfEvent", new { id = eventID, searchString = ViewBag.searchString, page = 1, pageSize = 10 })
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

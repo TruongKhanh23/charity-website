@@ -1,0 +1,16 @@
+﻿@using (Html.BeginForm("Create", "Visitor", FormMethod.Post))
+{
+    <div class="container form-div">
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input class="rounded-pill" type="email" name="Email" id="Email" required placeholder="Email" aria-required="true" aria-invalid="true">
+        <label for="inputName" class="sr-only">HỌ VÀ TÊN</label>
+        <input class="rounded-pill" type="text" name="Name" id="Name" required placeholder="Tên / Tổ Chức">
+        <label for="inputPhone" class="sr-only">SỐ ĐIỆN THOẠI</label>
+        <input class="rounded-pill" type="tel" name="Phone" id="Phone" required placeholder="Số đ   iện thoại" aria-required="true" aria-invalid="true">
+    </div>
+    <div class="form-div">
+        <label for="inputVisitReason" lass="sr-only"></label>
+        <textarea class="rounded" style="border-radius: 10px!important; resize: none; font-size: large" type="text" name="VisitReason" id="VisitReason" placeholder="Thông tin thêm..." aria-required="true" required aria-invalid="true" cols="220" rows="10"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">HOÀN THÀNH</button>
+}

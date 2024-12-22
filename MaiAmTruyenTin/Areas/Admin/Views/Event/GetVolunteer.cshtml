@@ -1,0 +1,115 @@
+﻿
+@using PagedList.Mvc;
+@model PagedList.IPagedList<MaiAmTruyenTin.Areas.Admin.Models.EventVolunteerModel>
+@{
+    ViewBag.Title = "THÊM TNV VÀO SỰ KIỆN";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    MaiAmTruyenTin.Areas.Admin.Models.EventModel eventModel = ViewBag.Event as MaiAmTruyenTin.Areas.Admin.Models.EventModel;
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<br />
+<h2 style="padding-left:23px" class="heading_b uk-margin-bottom">SỰ KIỆN @eventModel.EventName.ToUpper()</h2>
+<div class="md-card">
+    <div class="md-card-content">
+        @using (Html.BeginForm("GetVolunteer", "Volunteer", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-4 col-lg-8">
+                    <input style="border: none; border-bottom: 2px solid lightgray" type="text" value="@ViewBag.SearchString" placeholder="NHẬP TỪ KHÓA" class="form-control" name="searchString" />
+                    <input type="hidden" value="@eventModel.ID" name="eventCode" />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success">TÌM KIẾM</button>
+                    <a class="btn btn-primary" href="/Admin/Event/GetVolunteer?eventID=@eventModel.ID">TẤT CẢ</a>
+                    <a class="btn md-btn-warning" href="/Admin/Event/Index">DANH SÁCH SỰ KIỆN</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        <div class="uk-overflow-container uk-margin-bottom">
+            <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_pager_filter">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">STT</th>
+                        <th>MÃ TÌNH NGUYỆN VIÊN</th>
+                        <th>TÊN TÌNH NGUYỆN VIÊN</th>
+                        <th>ĐỊA CHỈ EMAIL</th>
+                        <th>SỐ ĐIỆN THOẠI</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th style="text-align: center">STT</th>
+                        <th>MÃ TÌNH NGUYỆN VIÊN</th>
+                        <th>TÊN TÌNH NGUYỆN VIÊN</th>
+                        <th>ĐỊA CHỈ EMAIL</th>
+                        <th>SỐ ĐIỆN THOẠI</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{ int i = 0;}
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="4">KHÔNG CÓ DỮ LIỆU</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            { i++; }
+                            <tr>
+                                <td style="text-align: center">@i</td>
+                                <td>@item.VolunteerCode</td>
+                                <td>@item.FullName</td>
+                                <td>@item.Email</td>
+                                <td>@item.Phone</td>
+                                <td class="uk-text-center">
+                                    <input type="hidden" class="CreatedVLTID" value="@item.VolunteerID" />
+                                    <input type="hidden" class="CreatedEventID" value="@eventModel.ID" />
+                                    <input type="hidden" class="CreatedBy" value="@session.Name" />
+                                    <input type="hidden" class="CreatedVLTImg" value="@item.VolunteerImg" />
+                                    <a title="Thêm vào sự kiện" class="btn btn-xs btn-success VolunteerIDEventID" style="color:white; font-weight:bold">+</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("GetVolunteer", new { page, @searchString = ViewBag.SearchString, eventCode = eventModel.ID }));
+        </div>
+    </div>
+</div>
+<script>
+    $('.VolunteerIDEventID').on('click', function () {
+        var self = $(this);
+        if (confirm("Bạn có chắc thêm tình nguyện viên này vào không?")) {
+            loadingform();
+            var evID = self.parent().find('.CreatedEventID').val();
+            var vltID = self.parent().find('.CreatedVLTID').val();
+            var created = self.parent().find('.CreatedBy').val();
+            var vltImg = self.parent().find(".CreatedVLTImg").val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Event/AddVolunteerEvent',
+                data: { eventID: evID, volunteerID: vltID, createdBy: created, VolunteerImg: vltImg },
+                success: function (data) {
+                    self.parent().parent().remove();
+                    unloadingform();
+                },
+                error: function () {
+                    unloadingform();
+                }
+            })
+        }
+    });
+</script>

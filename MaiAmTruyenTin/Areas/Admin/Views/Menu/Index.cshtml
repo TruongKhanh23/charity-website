@@ -1,0 +1,167 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<Model.ViewModel.MenuViewModel>
+@{
+    ViewBag.Title = "THỰC ĐƠN | DANH SÁCH";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2 style="padding-left:23px" class="heading_b uk-margin-bottom">QUẢN LÝ THỰC ĐƠN</h2>
+    </div>
+    <div class="col-md-2">
+        @using (Html.BeginForm("ExportToExcel", "Menu", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="submit" value="XUẤT FILE EXCEL" class="btn btn-success" />
+        }
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        @using (Html.BeginForm("Index", "Menu", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="uk-form-label">Ngày bắt đầu</label>
+                    <input type="text" data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" autocomplete="off" name="start" class="md-input" />
+                </div>
+                <div class="col-md-4">
+                    <label class="uk-form-label">Ngày kết thúc</label>
+                    <input type="text" data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" autocomplete="off" name="end" class="md-input" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <input style="border: none; border-bottom: 2px solid lightgray" type="text" value="@ViewBag.SearchString" placeholder="NHẬP TỪ KHÓA" class="md-input" name="searchString" />
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success">TÌM KIẾM</button>
+                    <a class="btn btn-primary" href="/he-thong/thuc-don/danh-sach">XEM TẤT CẢ</a>
+                    <a class="btn btn-primary" href="/he-thong/thuc-don/them-moi">THÊM MỚI</a>
+                </div>
+            </div>
+        }
+        <br />
+        <div class="row">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data">
+                    <div>
+                        <input name="file" type="file" required />
+                        <button type="submit" class="btn btn-success">NHẬP HÀNG LOẠT TỪ EXCEL</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="md-card">
+    <div class="md-card-content">
+        <div class="uk-overflow-container uk-margin-bottom">
+            <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_pager_filter">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">STT</th>
+                        <th>NGÀY</th>
+                        <th>BUỔI SÁNG</th>
+                        <th>XẾ TRƯA</th>
+                        <th>BUỔI TRƯA</th>
+                        <th>XẾ CHIỀU</th>
+                        <th>BUỔI CHIỀU</th>
+                        <th>BUỔI TỐI</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th style="text-align: center">STT</th>
+                        <th>NGÀY</th>
+                        <th>BUỔI SÁNG</th>
+                        <th>XẾ TRƯA</th>
+                        <th>BUỔI TRƯA</th>
+                        <th>XẾ CHIỀU</th>
+                        <th>BUỔI CHIỀU</th>
+                        <th>BUỔI TỐI</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{ int i = ViewBag.STT;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        var link = "/he-thong/thuc-don/chinh-sua/" + item.ID;
+                        var link1 = "/he-thong/thuc-don/chi-tiet/" + item.ID;
+                        <tr id="@item.ID">
+                            <td style="text-align: center">@i</td>
+                            <td><a href="@link1">@item.Date.ToString("dd/MM/yyyy")</a></td>
+                            <td>
+                                M: @item.MorningTapasName <br />
+                                X: @item.MorningFryName <br />
+                                C: @item.MorningSoupName
+                            </td>
+                            <td>
+                                @item.BrunchName1 <br />
+                                @item.BrunchName2
+                            </td>
+                            <td>
+                                M: @item.NoonTapasName <br />
+                                X: @item.NoonFryName <br />
+                                C: @item.NoonSoupName
+                            </td>
+                            <td>@item.TeaName1 <br /> @item.TeaName2</td>
+                            <td>
+                                M: @item.AfternoonTapasName <br />
+                                X: @item.AfternoonFryName <br />
+                                C: @item.AfternoonSoupName
+                            </td>
+                            <td>
+                                @item.DinnerName1 <br />
+                                @item.DinnerName2
+                            </td>
+                            <td class="uk-text-center">
+                                <a href="@link"><img src="~/Assets/admin/img/edit.png" style="width:30px"></a>
+                                <input type="hidden" class="DeleteID" value="@item.ID" />
+                                <a title="Xóa thành viên" class="removeByID"><img src="~/Assets/admin/img/delete.png" style="width:30px;"></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+
+        </div>
+    </div>
+</div>
+<script>
+
+    $('.removeByID').on('click', function () {
+        var self = $(this);
+        if (confirm("Bạn chắc xóa không?")) {
+            loadingform();
+            var MA = self.parent().find('.DeleteID').val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Menu/Delete',
+                data: { id: MA },
+                success: function (data) {
+                    self.parent().parent().remove();
+                    unloadingform();
+                },
+                error: function () {
+                    unloadingform();
+                }
+            })
+        }
+    });
+
+
+</script>
+

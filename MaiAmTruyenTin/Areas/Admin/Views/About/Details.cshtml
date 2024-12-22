@@ -1,0 +1,88 @@
+﻿@model Model.EF.About
+
+@{
+    ViewBag.Title = "THÔNG TIN GIỚI THIỆU";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THÔNG TIN GIỚI THIỆU</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHI TIẾT THÔNG TIN GIỚI THIỆU</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tiêu đề lớn (dòng 1)<span class="req">*</span></label>
+                        <input type="text" id="BigTitleLine1" name="BigTitleLine1" readonly value="@Model.BigTitleLine1" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tiêu đề lớn (dòng 2)<span class="req">*</span></label>
+                        <input type="text" id="BigTitleLine2" name="BigTitleLine2" readonly value="@Model.BigTitleLine2" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Mô tả bên dưới tiêu đề lớn<span class="req">*</span></label>
+                        <input type="text" id="Description" name="Description" readonly value="@Model.Description" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Câu khẩu hiệu (slogan)<span class="req">*</span></label>
+                        <input type="text" id="Slogan" name="Slogan" readonly value="@Model.Slogan" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Thông tin giới thiệu<span class="req">*</span></label>
+                        <textarea type="text" id="Introduce" name="Introduce" class="md-input">@Model.Introduce</textarea>
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tài khoản ngân hàng<span class="req">*</span></label>
+                        <input type="number" id="BankingNumber" name="BankingNumber" readonly value="@Model.BankingNumber" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Chi nhánh ngân hàng<span class="req">*</span></label>
+                        <input type="text" id="BankBranch" name="BankBranch" readonly value="@Model.BankBranch" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Chủ tài khoản<span class="req">*</span></label>
+                        <input type="text" id="AccountHolder" name="AccountHolder" readonly value="@Model.AccountHolder" class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Email<span class="req">*</span></label>
+                        <input type="email" id="Email" name="Email" readonly value="@Model.Email" class="md-input" />
+                    </div>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "About", new { id = Model.ID })" class="md-btn md-btn-success">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "Home")" class="md-btn md-btn-warning">QUAY LẠI TRANG CHỦ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+

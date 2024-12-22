@@ -1,0 +1,150 @@
+﻿@model Model.EF.Activity
+
+@{
+    ViewBag.Title = "THÊM BÀI VIẾT HOẠT ĐỘNG";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter{
+    <script>
+        var editor = CKEDITOR.replace('txtContent', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        function checkFileDetails() {
+            var fi = document.getElementById('img');
+            if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
+
+                for (var i = 0; i <= fi.files.length - 1; i++) {
+                    var fileName, fileExtension, fileSize, fileType, dateModified;
+
+                    // FILE NAME AND EXTENSION.
+                    fileName = fi.files.item(i).name;
+                    fileExtension = fileName.replace(/^.*\./, '');
+
+                    // CHECK IF ITS AN IMAGE FILE.
+                    // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
+                    if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+                        readImageFile(fi.files.item(i));             // GET IMAGE INFO USING fileReader().
+                    }
+                    else {
+                        // IF THE FILE IS NOT AN IMAGE.
+                        var button = document.getElementById("btnSubmit");
+                        button.disabled = true;
+                        document.getElementById('alerts').innerHTML = 'File bạn đã chọn không phải là hình ảnh! Xin kiểm tra lại!';
+                    }
+                }
+
+                // GET THE IMAGE WIDTH AND HEIGHT USING fileReader() API.
+                function readImageFile(file) {
+                    var reader = new FileReader(); // CREATE AN NEW INSTANCE.
+
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.src = e.target.result;
+
+                        img.onload = function () {
+                            var w = this.width;
+                            var h = this.height;
+
+                            if (w != 800 && h != 600 || w != 800 || h != 600) {
+                                var button = document.getElementById("btnSubmit");
+                                button.disabled = true;
+                                document.getElementById('alerts').innerHTML = 'Ảnh minh họa bài viết phải có kích thước 800x600! Tìm trang web picresize.com để chỉnh kích thước ảnh!';
+                            }
+                            else {
+                                var button = document.getElementById("btnSubmit");
+                                button.disabled = false;
+                                document.getElementById('alerts').innerHTML = '';
+                            }
+
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    </script>
+}
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ BÀI VIẾT HOẠT ĐỘNG</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI BÀI VIẾT HOẠT ĐỘNG</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h3 style="color: rgb(124, 179, 66)">I. THÔNG TIN CƠ BẢN</h3>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tiêu đề bài viết<span class="req">*</span></label>
+                            <input type="text" name="Name" id="Name" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Mô tả bài viết<span class="req">*</span></label>
+                            <input type="text" name="Description" id="Description" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Chi tiết bài viết<span class="req">*</span></label>
+                            @Html.TextAreaFor(model => model.Details, new { htmlAttributes = new { @class = "md-input" }, @id = "txtContent" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="uk-width-medium-1-2">
+                        <h3 class="heading_a uk-margin-small-bottom">
+                            Hình ảnh
+                        </h3>
+                        <input type="file" name="ImageFile" id="img" multiple onchange="checkFileDetails()" required class="dropify" />
+                        <div id="alerts" style="color:red"></div>
+                    </div>
+
+                    <h3 style="color: rgb(33, 150, 243)">II. THÔNG TIN KHỞI TẠO</h3>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" checked data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="TẠO MỚI" id="btnSubmit" />
+                        <a href="@Url.Action("Index", "Activity")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "Activity")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+

@@ -1,0 +1,132 @@
+﻿@model Model.EF.SchoolReportDetail
+
+@{
+    ViewBag.Title = "SỬA KẾT QUẢ HỌC TẬP";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ KẾT QUẢ HỌC TẬP | HỌC SINH: @ViewBag.ChildrenName</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243);
+                color: white; font-size: 15px;">
+                CHỈNH SỬA KẾT QUẢ HỌC TẬP
+            </h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "SchoolReportDetail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Mã học bạ<span class="req">*</span></label>
+                            <input type="hidden" id="SchoolReportID" name="SchoolReportID" value="@Model.SchoolReportID" />
+                            <input type="text" readonly class="md-input form-control" value="@ViewBag.SchoolReportCode" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên trường<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.SchoolName, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Năm học<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.SchoolYear, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Điểm trung bình học kỳ 1<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Semester1, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Điểm trung bình học kỳ 2<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Semester2, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Điểm trung bình năm học<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.FullYear, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Xếp hạng<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Rating, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>@Html.DisplayNameFor(model => model.TeacherName)<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.TeacherName, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>@Html.DisplayNameFor(model => model.TeacherEvaluation)<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.TeacherEvaluation, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1">
+                            <div class="md-card">
+                                <div class="md-card-content">
+                                    <h3 class="heading_a uk-margin-small-bottom">
+                                        Hình ảnh xác thực (tải lên file PDF)
+                                    </h3>
+                                    <input type="file" name="pdfFile" id="pdfFile" class="dropify" />
+                                    <a href="/Admin/SchoolReportDetail/DownloadPDF?pdfFile=@Model.Image" target="_blank">Nhấn vào để xem hình ảnh xác thực hiện tại!</a>
+                                    <div style="padding-top: 2%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" id="ModifiedDate" name="ModifiedDate" value="@DateTime.Now.ToString()" class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                            <input type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" checked data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        @{ var link1 = "/he-thong/hoc-ba/chi-tiet/" + Model.SchoolReportID;}
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        <a href="@link1" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@link1" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

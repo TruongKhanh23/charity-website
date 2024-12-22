@@ -1,0 +1,155 @@
+﻿@model Model.EF.YellowBook
+
+@{
+    ViewBag.Title = "SỔ VÀNG | CHỈNH SỬA";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ SỔ VÀNG</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI SỔ VÀNG</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "YellowBook", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày<span class="req">*</span></label>
+                            <input type="text" name="Date" id="Date" required data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" class="md-input" value="@Model.Date.Value.ToString("MM/dd/yyyy")" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Tên người cho<span class="req">*</span></label>
+                            <input type="text" name="GiverName" id="GiverName" required class="md-input" value="@Model.GiverName" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số điện thoại người cho<span class="req">*</span></label>
+                            <input type="text" name="Phone" id="Phone" required class="md-input" value="@Model.Phone" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Địa chỉ người cho<span class="req">*</span></label>
+                            <input type="text" name="Address" id="Name" required class="md-input" value="@Model.Address" />
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">I. HÀNG HÓA 1</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Tên hàng hóa<span class="req">*</span></label>
+                            <input type="text" name="ProductName1" id="ProductName1" required class="md-input" value="@Model.ProductName1" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn vị tính<span class="req">*</span></label>
+                            <input type="text" name="Unit1" id="Unit1" required class="md-input" value="@Model.Unit1" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số lượng<span class="req">*</span></label>
+                            <input type="number" min="0" step="0.1" name="Amount1" id="Amount1" required class="md-input" value="@Model.Amount1" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn giá<span class="req">*</span></label>
+                            <input type="number" min="0" step="0.1" name="Price1" id="Price1" required class="md-input" value="@Model.Price1" />
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">II. HÀNG HÓA 2</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Tên hàng hóa<span class="req">*</span></label>
+                            <input type="text" name="ProductName2" id="ProductName2" class="md-input" value="@Model.ProductName2" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn vị tính<span class="req">*</span></label>
+                            <input type="text" name="Unit2" id="Unit2" class="md-input" value="@Model.Unit2" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số lượng<span class="req">*</span></label>
+                            <input type="number" min="0" step="0.1" name="Amount2" id="Amount2" class="md-input" value="@Model.Amount2" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn giá<span class="req">*</span></label>
+                            <input type="number" min="0" step="0.1" name="Price2" id="Price2" class="md-input" value="@Model.Price2" />
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">III. HÀNG HÓA 3</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Tên hàng hóa<span class="req">*</span></label>
+                            <input type="text" name="ProductName3" id="ProductName3" class="md-input" value="@Model.ProductName3" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn vị tính<span class="req">*</span></label>
+                            <input type="text" name="Unit3" id="Unit3" class="md-input" value="@Model.Unit3" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số lượng<span class="req">*</span></label>
+                            <input type="number" min="0" step="0.1" name="Amount3" id="Amount3" class="md-input" value="@Model.Amount3" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn giá<span class="req">*</span></label>
+                            <input type="number" min="0" step="0.1" name="Price3" id="Price3" class="md-input" value="@Model.Price3" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên người nhận<span class="req">*</span></label>
+                            <input type="text" name="ReceiverName" id="ReceiverName" class="md-input" value="@Model.ReceiverName" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" name="ModifiedDate" id="ModifiedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" name="ModifiedBy" id="ModifiedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" checked data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        <a href="@Url.Action("Index", "YellowBook")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "YellowBook")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+

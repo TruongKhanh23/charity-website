@@ -1,0 +1,171 @@
+﻿@model Model.EF.Menu
+
+@{
+    ViewBag.Title = "THỰC ĐƠN | THÊM MỚI";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter{
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+        var editor1 = CKEDITOR.replace('txtDetails', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        var editor2 = CKEDITOR.replace('txtAchievements', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+    </script>
+}
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THỰC ĐƠN</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI THỰC ĐƠN</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Create", "Menu", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Ngày<span class="req">*</span></label>
+                            <input type="text" name="Date" id="Date" required data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" class="md-input" autocomplete="off" />
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">I. BUỔI SÁNG</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.MorningTapas, ViewBag.Tapas as SelectList, "---Chọn món mặn---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.MorningFry, ViewBag.Fry as SelectList, "---Chọn món xào---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.MorningSoup, ViewBag.Soup as SelectList, "---Chọn món canh---", new { @class = "md-input" })
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">II. XẾ TRƯA</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.Brunch1, ViewBag.Snack as SelectList, "---Chọn món 1---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.Brunch2, ViewBag.Snack as SelectList, "---Chọn món 2---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">
+                        III. BUỔI TRƯA
+                    </h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.NoonTapas, ViewBag.Tapas as SelectList, "---Chọn món mặn---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.NoonFry, ViewBag.Fry as SelectList, "---Chọn món xào---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.NoonSoup, ViewBag.Soup as SelectList, "---Chọn món canh---", new { @class = "md-input" })
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">
+                        IV. XẾ CHIỀU
+                    </h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.Tea1, ViewBag.Snack as SelectList, "---Chọn món 1---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.Tea2, ViewBag.Snack as SelectList, "---Chọn món 2---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">V. BUỔI CHIỀU</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.AfternoonTapas, ViewBag.Tapas as SelectList, "---Chọn món mặn---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.AfternoonFry, ViewBag.Fry as SelectList, "---Chọn món xào---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.AfternoonSoup, ViewBag.Soup as SelectList, "---Chọn món canh---", new { @class = "md-input" })
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(124, 179, 66)">V. BUỔI TỐI</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.Dinner1, ViewBag.Snack as SelectList, "---Chọn món 1---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                            @Html.DropDownListFor(model => model.Dinner2, ViewBag.Snack as SelectList, "---Chọn món 2---", new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-medium-1-3 parsley-row">
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Ghi chú<span class="req">*</span></label>
+                            <textarea class="md-input" id="Note" name="Note">Không có ghi chú đặc biệt!</textarea>
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <p>
+                                <label>Trạng thái sử dụng<span class="req">*</span></label>
+                                <input type="checkbox" id="Status" name="Status" value="true" data-md-icheck>
+                            </p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="Tạo mới" />
+                        <a href="@Url.Action("Index", "Menu")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "Menu")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

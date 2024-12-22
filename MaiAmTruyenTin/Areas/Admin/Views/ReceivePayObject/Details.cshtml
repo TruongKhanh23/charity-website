@@ -1,0 +1,107 @@
+﻿@model Model.EF.ReceivePayObject
+
+@{
+    ViewBag.Title = "THÔNG TIN ĐỐI TƯỢNG THU CHI";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+.
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ ĐỐI TƯỢNG THU CHI</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÔNG TIN CHI TIẾT</h3>
+            <div class="md-card-content">
+
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <label>Mã đối tượng thu chi<span class="req">*</span></label>
+                        <input readonly type="text" name="Code" id="Code" style="text-transform:uppercase" required class="md-input" value="@Model.Code" />
+                    </div>
+                    <div class="uk-width-1-2">
+                        <label>Tên đối tượng thu chi<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <label>Đơn vị<span class="req">*</span></label>
+                        <input readonly type="text" name="AffiliatedUnit" id="AffiliatedUnit" required class="md-input" value="@Model.AffiliatedUnit" />
+                    </div>
+                    <div class="uk-width-1-2">
+                        <label>Địa chỉ<span class="req">*</span></label>
+                        <input readonly type="text" name="Address" id="Address" required class="md-input" value="@Model.Address" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <label>Số điện thoại<span class="req">*</span></label>
+                        <input readonly type="text" name="Phone" id="Phone" required class="md-input" value="@Model.Phone" />
+                    </div>
+                    <div class="uk-width-1-2">
+                        <label>Số Fax<span class="req">*</span></label>
+                        <input readonly type="text" name="Fax" id="Fax" required class="md-input" value="@Model.Fax" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <label>Địa chỉ website<span class="req">*</span></label>
+                        <input readonly type="text" name="Website" id="Website" required class="md-input" value="@Model.Website" />
+                    </div>
+                    <div class="uk-width-1-2">
+                        <label>Địa chỉ email<span class="req">*</span></label>
+                        <input readonly type="text" name="Email" id="Email" required class="md-input" value="@Model.Email" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-2">
+                        <label>Ngân hàng sử dụng<span class="req">*</span></label>
+                        <input readonly type="text" name="BankID" id="BankID" required class="md-input" value="@Html.Action("DisplayBankName", new { id = Model.BankID })" />
+                    </div>
+                    <div class="uk-width-1-2">
+                        <label>Số tài khoản<span class="req">*</span></label>
+                        <input readonly type="text" name="BankingNumber" id="BankingNumber" required class="md-input" value="@Model.BankingNumber" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-1">
+                        <label>Phân loại đối tượng thu chi<span class="req">*</span></label>
+                        <input readonly type="text" name="CategoryID" id="CategoryID" required class="md-input" value="@Html.Action("DisplayCategoryName", new { id = Model.CategoryID })" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-1-1">
+                        <label>Ghi chú<span class="req">*</span></label>
+                        <input readonly type="text" name="Note" id="Note" required class="md-input" value="@Model.Note" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                    </div>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "ReceivePayObject", new { id = Model.ID})" class="md-btn md-btn-danger">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "ReceivePayObject")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

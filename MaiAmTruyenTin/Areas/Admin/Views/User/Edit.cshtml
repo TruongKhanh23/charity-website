@@ -1,0 +1,199 @@
+﻿@model Model.EF.User
+@{
+    ViewBag.Title = "SỬA THÔNG TIN TÀI KHOẢN NGƯỜI DÙNG";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+
+@section jsFooter {
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+        var editor1 = CKEDITOR.replace('txtDetails', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        var editor2 = CKEDITOR.replace('txtAchievements', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        var editor = CKEDITOR.replace('txtContent', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+    </script>
+}
+<script>
+    var state = false;
+    function toggle() {
+        if (state) {
+            document.getElementById("Password").setAttribute("type", "password");
+            document.getElementById("eye").style.color = '#7a797e';
+            state = false;
+        }
+        else {
+            document.getElementById("Password").setAttribute("type", "text");
+            document.getElementById("eye").style.color = '#5887ef';
+            state = true;
+        }
+    }
+</script>
+<style>
+    #passwordSpan {
+        padding-left: 490px;
+        margin-left: 490px;
+        top: 19%;
+        position: absolute;
+        cursor: pointer;
+    }
+</style>
+
+
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHỈNH SỬA TÀI KHOẢN NGƯỜI DÙNG</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên tài khoản<span class="req">*</span></label>
+                            <input type="text" name="UserName" id="UserName" value="@Model.UserName" readonly required class="md-input" />
+                        </div>
+                    </div>
+                    if (session.GroupID != "CHILDREN")
+                    {
+                        <div class="uk-grid">
+                            <div class="uk-width-medium-1-1 parsley-row">
+                                <label class="md-input-wrapper md-input-filled">Mật khẩu<span class="req">*</span></label>
+                                <input type="hidden" class="md-input" value="password"/>
+                            </div>
+                            <div class="uk-width-medium-1-1 parsley-row">
+                                <input type="password" class="md-input" id="Password" name="Password" value="@Model.Password" />
+                                <a href="" class="uk-form-password-toggle" data-uk-form-password>show</a>
+                        </div>
+                        </div>
+                    }
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Họ và tên người dùng<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Name, new { @class = "md-input form-control", required = "required" })
+                        </div>
+                    </div>
+                    if (session.GroupID == "ADMIN")
+                    {
+                        <div class="uk-grid">
+                            <div class="uk-width-medium-1-1 parsley-row">
+                                <label>Loại tài khoản<span class="req">*</span></label>
+                                @Html.DropDownListFor(model => model.GroupID, ViewBag.AccountType as SelectList, new { @class = "md-input", required = "required" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" id="GroupID" name="GroupID" value="@Model.GroupID" />
+                        <br />
+                    }
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Địa chỉ<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Address, new { @class = "md-input form-control", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>@Html.DisplayNameFor(model => model.Email)<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "md-input form-control", required = "required", @type = "email" })
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số điện thoại<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "md-input form-control", required = "required", @type = "number" })
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" id="ModifiedDate" name="ModifiedDate" value="@DateTime.Now.ToString()" class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                            <input type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <label>Ảnh đại diện<span class="req">*</span></label>
+                        <div class="uk-width-1-1">
+                            <div class="uk-form-file md-btn md-btn-success" id="btnSelectImage">
+                                CHỌN
+                            </div>
+                            <div class="uk-form-file uk-text-primary"><input id="txtImage" name="Image" value="@Model.Image" class="k-input" readonly></div>
+
+                            <div style="padding-top: 2%">
+                                <a href="@Model.Image" data-uk-lightbox="{group:'user-photos'}">
+                                    <img src="@Model.Image" style="width:10%" alt="" /> (Hình hiện tại)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        @if (session.GroupID != "CHILDREN")
+                        {
+                            <a href="@Url.Action("Index", "User")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                            <a href="@Url.Action("Index", "User")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                        }
+                        else
+                        {
+                            <a href="/he-thong/tai-khoan-nguoi-dung/chi-tiet/@session.UserID" class="md-btn md-btn-danger">HỦY BỎ</a>
+                            <a href="/he-thong/tai-khoan-nguoi-dung/chi-tiet/@session.UserID" class="md-btn md-btn-warning">QUAY LẠI</a>
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
+
+
+
+
+
+

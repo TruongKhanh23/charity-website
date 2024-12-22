@@ -1,0 +1,87 @@
+﻿@model Model.EF.HealthInsurance
+
+@{
+    ViewBag.Title = "THÔNG TIN THẺ BẢO HIỂM Y TẾ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ BẢO HIỂM Y TẾ</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÔNG TIN CHI TIẾT</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Họ và tên<span class="req">*</span></label>
+                        <input readonly type="text" name="ChildrenID" id="ChildrenID" required class="md-input" value="@ViewBag.ChildrenName" />
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Mã thẻ bảo hiểm<span class="req">*</span></label>
+                        <input readonly type="text" name="No" id="No" required class="md-input" value="@Model.No" />
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Đăng ký tại bệnh viện<span class="req">*</span></label>
+                        <input readonly type="text" name="RegisteredHospital" id="RegisteredHospital" required class="md-input" value="@Model.RegisteredHospital" />
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày mua<span class="req">*</span></label>
+                        <input readonly type="text" name="BoughtDate" id="BoughtDate" required class="md-input" value="@Model.BoughtDate.Value.ToString("dd/MM/yyyy")" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày hết hạn<span class="req">*</span></label>
+                        <input readonly type="text" name="EndDate" id="EndDate" required class="md-input" value="@Model.BoughtDate.Value.ToString("dd/MM/yyyy")" />
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedDate" id="CreatedDate" required class="md-input" value="@Model.CreatedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedBy" id="CreatedBy" required class="md-input" value="@Model.CreatedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                    </div>
+                </div>
+
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "HealthInsurance", new { id = Model.ID})" class="md-btn md-btn-danger">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "HealthInsurance")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

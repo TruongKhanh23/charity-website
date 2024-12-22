@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Model.EF.DevelopmentProcess>
+
+@foreach (var item in Model)
+{
+    <div class="uk-width-large-1-2">
+        <ul class="md-list md-list-addon">
+            <li>
+                <div class="md-list-addon-element">
+                    <span class="menu_icon"><img src="~/Assets/admin/img/others/developmentprocess-icon.png" style="width:25px !important"></span>
+                </div>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.CreatedDate.Value.ToString("yyyy")</span>
+                    <span class="uk-text-small uk-text-muted">Năm</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-width-large-1-2">
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.Title</span>
+                    <span class="uk-text-small uk-text-muted">Thành tựu</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+}
+

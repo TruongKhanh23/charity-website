@@ -1,0 +1,78 @@
+﻿@model Model.EF.ReceivePay
+
+@{
+    ViewBag.Title = "KHOẢN THU/ CHI | CHỈNH SỬA";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ KHOẢN THU/ CHI</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHỈNH SỬA KHOẢN THU/ CHI</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "ReceivePay", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên phiếu<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Name, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Ghi chú<span class="req">*</span></label>
+                            <textarea name="Note" id="Note" required class="md-input">@Model.Note</textarea>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="ReceivableIsTrue" name="ReceivableIsTrue" value="@Model.ReceivableIsTrue" />
+                    <br />
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" id="ModifiedDate" name="ModifiedDate" readonly value="@DateTime.Now.ToString()" class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                            <input type="text" name="ModifiedBy" id="ModifiedBy" required readonly class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        @if (Model.ReceivableIsTrue == true)
+                        {
+                            <a href="@Url.Action("Index", "ReceivePay")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                            <a href="@Url.Action("Index", "ReceivePay")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH KHOẢN THU</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index1", "ReceivePay")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                            <a href="@Url.Action("Index1", "ReceivePay")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH KHOẢN CHI</a>
+                        }
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

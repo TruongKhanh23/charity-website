@@ -1,0 +1,140 @@
+﻿@model Model.EF.SchoolReportDetail
+
+@{
+    ViewBag.Title = "THÊM MỚI KẾT QUẢ HỌC TẬP";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter {
+    <script>
+
+        var editor = CKEDITOR.replace('txtContent', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+    </script>
+}
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ KẾT QUẢ HỌC TẬP CỦA HỌC SINH: @ViewBag.ChildrenName</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI KẾT QUẢ NĂM HỌC | HỌC BẠ @ViewBag.SchoolReportTypeName</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Create", "SchoolReportDetail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Mã học bạ<span class="req">*</span></label>
+                            <input type="hidden" id="SchoolReportID" name="SchoolReportID" value="@ViewBag.SchoolReportID" />
+                            <input type="text" value="@ViewBag.SchoolReportName" required readonly class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên trường<span class="req">*</span></label>
+                            <input type="text" name="SchoolName" id="SchoolName" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Năm học<span class="req">*</span></label>
+                            <input type="text" name="SchoolYear" id="SchoolYear" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên giáo viên chủ nhiệm<span class="req">*</span></label>
+                            <input type="text" name="TeacherName" id="TeacherName" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Điểm trung bình học kỳ 1<span class="req">*</span></label>
+                            <input type="number" name="Semester1" id="Semester1" value="0" step="0.1" required class="md-input" step="0.1" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Điểm trung bình học kỳ 2<span class="req">*</span></label>
+                            <input type="number" name="Semester2" id="Semester2" value="0" step="0.1" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Điểm trung bình năm học<span class="req">*</span></label>
+                            <input type="number" name="FullYear" id="FullYear" value="0" step="0.1" required class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Xếp hạng<span class="req">*</span></label>
+                            <input type="number" name="Rating" id="Rating" required value="0" class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Nhận xét của giáo viên<span class="req">*</span></label>
+                            <textarea name="TeacherEvaluation" id="TeacherEvaluation" required class="md-input"></textarea>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1">
+                            <div class="md-card">
+                                <div class="md-card-content">
+                                    <h3 class="heading_a uk-margin-small-bottom">
+                                        Hình ảnh xác thực (tải lên file PDF)
+                                    </h3>
+                                    <input type="file" name="PDFFile" id="PDFFile" class="dropify" />
+                                    <div style="padding-top: 2%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-1 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="TẠO MỚI" />
+                        <a href="/he-thong/hoc-ba/chi-tiet/@ViewBag.SchoolReportID" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="/he-thong/hoc-ba/chi-tiet/@ViewBag.SchoolReportID" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

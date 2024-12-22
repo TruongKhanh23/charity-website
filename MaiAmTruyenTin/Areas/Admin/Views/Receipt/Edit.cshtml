@@ -1,0 +1,209 @@
+﻿@model Model.EF.Receipt
+
+@{
+    ViewBag.Title = "PHIẾU THU | CHỈNH SỬA";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<script>
+    function showBankInfo() {
+        var account = document.getElementById("AccountID");
+        if (account.value != "2") {
+            document.getElementById("IDNo").value = "";
+            document.getElementById("DateOfIssue").value = "";
+            document.getElementById("PlaceOfIssue").value = "";
+            document.getElementById("AccountNo").value = "";
+            document.getElementById("AtBank").value = "";
+            document.getElementById("FinancialPaper").value = "";
+
+            document.getElementById("IDNo").required = false;
+            document.getElementById("DateOfIssue").required = false;
+            document.getElementById("PlaceOfIssue").required = false;
+            document.getElementById("AccountNo").required = false;
+            document.getElementById("AtBank").required = false;
+            document.getElementById("FinancialPaper").required = false;
+
+            document.getElementById("IDNo").disabled = true;
+            document.getElementById("DateOfIssue").disabled = true;
+            document.getElementById("PlaceOfIssue").disabled = true;
+            document.getElementById("AccountNo").disabled = true;
+            document.getElementById("AtBank").disabled = true;
+            document.getElementById("FinancialPaper").disabled = true;
+        }
+        else {
+            document.getElementById("IDNo").required = true;
+            document.getElementById("DateOfIssue").required = true;
+            document.getElementById("PlaceOfIssue").required = true;
+            document.getElementById("AccountNo").required = true;
+            document.getElementById("AtBank").required = true;
+            document.getElementById("FinancialPaper").required = true;
+
+            document.getElementById("IDNo").disabled = false;
+            document.getElementById("DateOfIssue").disabled = false;
+            document.getElementById("PlaceOfIssue").disabled = false;
+            document.getElementById("AccountNo").disabled = false;
+            document.getElementById("AtBank").disabled = false;
+            document.getElementById("FinancialPaper").disabled = false;
+        }
+    }
+</script>
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ PHIẾU THU</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243);
+                    color: white; font-size: 15px;">
+                CHỈNH SỬA PHIẾU THU
+            </h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "Receipt", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Đối tượng thu (người gửi tiền)<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.ReceivePayObjectID, ViewBag.ObjectName as SelectList, new { @class = "md-input" })
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Khoản thu<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.ReceivePayID, ViewBag.ReceivePayName as SelectList, new { @class = "md-input" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Qũy tài khoản<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.ReceivePayAccountID, ViewBag.AccountName as SelectList, new { @class = "md-input", onchange = "showBankInfo()", id = "AccountID" })
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày thu (hiện tại: @Model.Date.Value.ToString("MM/dd/yyyy"))<span class="req">*</span></label>
+                            <input type="text" required name="Date" id="Date" class="md-input" data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" value="@Model.Date.Value.ToString("MM/dd/yyyy")" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Mã phiếu thu<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Code, new { @class = "md-input form-control" })
+                        </div>
+
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số tiền<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "md-input form-control", @type = "number", @min = 0, @step = "0.01" })
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <div class="uk-form-row">
+                                <label>Số tiền (bằng chữ)<span class="req">*</span></label>
+                                <input type="text" name="AmountText" id="AmountText" value="@Model.AmountText" required class="md-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <div class="uk-form-row">
+                                <label>Số tài khoản người cho<span class="req">*</span></label>
+                                <input type="number" name="IDNo" id="IDNo" min="0" value="@Model.IDNo" class="md-input" />
+                            </div>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <div class="uk-form-row">
+                                <label>Số tài khoản người nhận<span class="req">*</span></label>
+                                <input type="number" name="AccountNo" id="AccountNo" value="@Model.AccountNo" min="0" class="md-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <div class="uk-form-row">
+                                <label>Ngày cấp (người cho)<span class="req">*</span></label>
+                                <input type="text" name="DateOfIssue" id="DateOfIssue" class="md-input" data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" value="@(Model.DateOfIssue != null ? Model.DateOfIssue.Value.ToString("MM/dd/yyyy") : "")" />
+                            </div>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <div class="uk-form-row">
+                                <label>Nơi cấp (người cho)<span class="req">*</span></label>
+                                <input type="text" name="PlaceOfIssue" id="PlaceOfIssue" value="@Model.PlaceOfIssue" class="md-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <div class="uk-form-row">
+                                <label>Tại ngân hàng<span class="req">*</span></label>
+                                @Html.DropDownListFor(model => model.AtBank, ViewBag.BankName as SelectList, "", new { @class = "md-input" })
+                            </div>
+                        </div>
+                        <div class="uk-width-1-2">
+                            <div class="uk-form-row">
+                                <label>Chứng từ đi kèm<span class="req">*</span></label>
+                                <input type="text" name="FinancialPaper" id="FinancialPaper" value="@Model.FinancialPaper" class="md-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Địa chỉ người cho<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Address, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số điện thoại người cho<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1">
+                            <div class="uk-form-row">
+                                <label>Ghi chú<span class="req">*</span></label>
+                                <input type="text" name="Note" id="Note" value="@Model.Note" class="md-input" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" id="ModifiedDate" name="ModifiedDate" value="@DateTime.Now.ToString()" class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                            <input type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" id="Status" name="Status" data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        @{ var linkIndex = "/he-thong/phieu-thu/danh-sach";}
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        <a href="@linkIndex" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@linkIndex" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

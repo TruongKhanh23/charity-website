@@ -1,0 +1,168 @@
+﻿@model Model.EF.User
+
+@{
+    ViewBag.Title = "THÊM MỚI TÀI KHOẢN NGƯỜI DÙNG";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter {
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        $(function () {
+
+    </script>
+}
+<script>
+    var state = false;
+    function toggle() {
+        if (state) {
+            document.getElementById("Password").setAttribute("type", "password");
+            document.getElementById("eye").style.color = '#7a797e';
+            state = false;
+        }
+        else {
+            document.getElementById("Password").setAttribute("type", "text");
+            document.getElementById("eye").style.color = '#5887ef';
+            state = true;
+        }
+    }
+</script>
+<style>
+    #passwordSpan {
+        padding-left: 490px;
+        margin-left: 490px;
+        top: 21%;
+        position: absolute;
+        cursor: pointer;
+    }
+</style>
+
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI TÀI KHOẢN NGƯỜI DÙNG</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Create", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên tài khoản<span class="req">*</span></label>
+                            <input type="text" name="UserName" id="UserName" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Mật khẩu<span class="req">*</span></label>
+                            <input type="password" name="Password" id="Password" required class="md-input" />
+                            <span id="passwordSpan">
+                                <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()" title="Hiển thị mật khẩu!" style="cursor: pointer; color: #7a797e"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Họ và tên người dùng<span class="req">*</span></label>
+                            <input type="text" name="Name" id="Name" required class="md-input" />
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Chọn loại tài khoản<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.GroupID, ViewBag.AccountType as SelectList, "", new { @class = "md-input", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Địa chỉ<span class="req">*</span></label>
+                            <input type="text" name="Address" id="Address" required class="md-input" />
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>@Html.DisplayNameFor(model => model.Email)<span class="req">*</span></label>
+                            <input type="email" name="Email" id="Email" required class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số điện thoại<span class="req">*</span></label>
+                            <input type="number" name="Phone" id="Phone" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" checked data-md-icheck>
+                        </p>
+                    </div>
+                    <div class="uk-grid">
+                        <label>Ảnh đại diện<span class="req">*</span></label>
+                        <div class="uk-width-1-1">
+                            <div class="uk-form-file md-btn md-btn-success" id="btnSelectImage">
+                                CHỌN
+                            </div>
+                            <div class="uk-form-file uk-text-primary"><input id="txtImage" name="Image" class="k-input" readonly></div>
+                        </div>
+                    </div>
+                    <script>
+                        $('#btnSelectImage').on('click', function (e) {
+                            e.preventDefault();
+                            var finder = new CKFinder();
+                            finder.selectActionFunction = function (url) {
+                                $('#txtImage').val(url);
+                            };
+                            finder.popup();
+                        })
+                    </script>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="TẠO MỚI" />
+                        <a href="@Url.Action("Index", "User")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "User")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+

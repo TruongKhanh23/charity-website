@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Model.EF.SchoolReport>
+
+@foreach (var item in Model)
+{
+    <div class="uk-width-large-1-2">
+        <ul class="md-list md-list-addon">
+            <li>
+                <div class="md-list-addon-element">
+                    <span class="menu_icon"><img src="~/Assets/admin/img/others/level-icon.png" style="width:25px !important"></span>
+                </div>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.SchoolYear</span>
+                    <span class="uk-text-small uk-text-muted">Năm học</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-width-large-1-2">
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.FullYear</span>
+                    <span class="uk-text-small uk-text-muted">Điểm trung bình năm học</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+}

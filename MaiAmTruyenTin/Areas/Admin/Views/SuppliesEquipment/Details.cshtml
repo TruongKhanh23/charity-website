@@ -1,0 +1,105 @@
+﻿@model Model.EF.SuppliesEquipment
+
+@{
+    ViewBag.Title = "THÔNG TIN THIẾT BỊ VẬT TƯ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+.
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THIẾT BỊ - VẬT TƯ</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÔNG TIN CHI TIẾT</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>@Html.DisplayNameFor(model => model.Code)<span class="req">*</span></label>
+                        <input readonly type="text" name="Code" id="Code" style="text-transform:uppercase" required class="md-input" value="@Model.Code" />
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tên thiết bị vật tư<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Số lượng tổng<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Số lượng hư hỏng<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Người quản lý/ sử dụng<span class="req">*</span></label>
+                        <input readonly type="text" name="Description" id="Description" required class="md-input" value="@Model.Description" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Lịch sử sử dụng<span class="req">*</span></label>
+                        <input readonly type="text" name="Description" id="Description" required class="md-input" value="@Model.Description" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Mô tả<span class="req">*</span></label>
+                        <input readonly type="text" name="Description" id="Description" required class="md-input" value="@Model.Description" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedDate" id="CreatedDate" required class="md-input" value="@Model.CreatedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedBy" id="CreatedBy" required class="md-input" value="@Model.CreatedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                    </div>
+                </div>
+                <br />
+                <div id="user_profile_gallery" data-uk-check-display class="uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4" data-uk-grid="{gutter: 4}">
+                    <div>
+                        <label>Ảnh đại diện<span class="req">*</span></label>
+                        <br />
+                        <a href="@Model.Image" data-uk-lightbox="{group:'user-photos'}">
+                            <img src="@Model.Image" alt="" />
+                        </a>
+                    </div>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "SuppliesEquipment", new { id = Model.ID})" class="md-btn md-btn-danger">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "SuppliesEquipment")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

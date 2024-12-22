@@ -1,0 +1,368 @@
+﻿@model Model.EF.Children
+@{
+    ViewBag.Title = "THÔNG TIN TRẺ EM";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <div class="md-card-single">
+        <div class="md-card-content">
+            <div class="row">
+                <div class="col-md-4 col-lg-8" style="padding-top: 10px; padding-bottom: 10px">
+                    <h2 class="heading_khanh" style="color: rgb(101,159,19); font-weight: 700; font-size: xx-large; margin-bottom: 16px!important">QUẢN LÝ TRẺ EM</h2>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <a class="btn btn-primary" href="/Admin/Children/Index" title="Nhấn vào để xem danh sách trẻ">XEM DANH SÁCH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin data-uk-grid-match id="user_profile">
+        <div class="uk-width-large-7-10">
+            <div class="md-card">
+                <div class="user_heading">
+                    <div class="user_heading_avatar">
+                        <div class="thumbnail">
+                            <a href="@Url.Content(Model.Image)" data-uk-lightbox="{group:'user-photos'}">
+                                <img src="@Url.Content(Model.Image)" alt="user avatar" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="user_heading_content">
+                        <h2 class="heading_b uk-margin-bottom">
+                            <span class="uk-text-truncate">@Model.FullName</span>
+                            <span class="sub-heading">@Model.Gender | @Html.Action("Age", new { id = Model.ID }) tuổi</span>
+                        </h2>
+                    </div>
+
+                    <a class="md-fab md-fab-small md-fab-accent" href="@Url.Action("Edit", "Children", new { id = Model.ID })">
+                        <i class="material-icons">&#xE150;</i>
+                    </a>
+                </div>
+                <div class="user_content">
+                    <ul id="user_profile_tabs" class="uk-tab" data-uk-tab="{connect:'#user_profile_tabs_content', animation:'slide-horizontal'}" data-uk-sticky="{ top: 48, media: 960 }">
+                        <li class="uk-active"><a href="#">THÔNG TIN CƠ BẢN</a></li>
+                        <li><a href="#">GIẤY TỜ</a></li>
+                        <li><a href="#">THAM VẤN TÂM LÝ</a></li>
+                        <li><a href="#">HỌC BẠ</a></li>
+                        <li><a href="#">LỊCH SỬ PHÁT TRIỂN</a></li>
+                    </ul>
+                    <ul id="user_profile_tabs_content" class="uk-switcher uk-margin">
+                        <li>
+                            @* EnrollReason *@
+                            @Model.EnrollReason
+                            <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
+                                <div class="uk-width-large-1-2">
+                                    <h4 class="heading_khanh" style="color: rgb(101,159,19); font-weight:500!important; font-size: medium; margin-bottom: 1rem">THÔNG TIN CƠ BẢN</h4>
+                                    <ul class="md-list md-list-addon">
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-user"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@Model.FullName</span>
+                                                <span class="uk-text-small uk-text-muted">Họ và tên</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-code"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@Model.IdentityCard</span>
+                                                <span class="uk-text-small uk-text-muted">Chứng minh nhân dân</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-birthday-cake"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@Model.DateOfBirth.ToString("dd/MM/yyyy")</span>
+                                                <span class="uk-text-small uk-text-muted">Ngày sinh</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-hospital-o"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@Model.PlaceOfBirth</span>
+                                                <span class="uk-text-small uk-text-muted">Nơi sinh</span>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                @if (Model.Gender == "Nam")
+                                                {
+                                                    <i class="md-list-addon-icon uk-icon-male"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="md-list-addon-icon uk-icon-female"></i>
+                                                }
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@Model.Gender</span>
+                                                <span class="uk-text-small uk-text-muted">Giới tính</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-home"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@Model.Ethnic</span>
+                                                <span class="uk-text-small uk-text-muted">Dân tộc</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-addon-element">
+                                                <i class="md-list-addon-icon uk-icon-user-secret"></i>
+                                            </div>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading">@ViewBag.ChildrenCategory</span>
+                                                <span class="uk-text-small uk-text-muted">Hoàn cảnh trẻ</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="uk-width-large-1-2">
+                                    <h4 class="heading_khanh" style="color: rgb(101,159,19); font-weight:500!important; font-size: medium; margin-bottom: 1rem">THÔNG TIN KHÁC</h4>
+                                    <ul class="md-list">
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading" style="color:rgba(0,123,255,1)">@String.Format("{0:0,0}", Model.FoodExpenses) VNĐ @*<span style="color:black">= @Html.Action("CurrencyConversion", new { amount = Model.FoodExpenses, fromCurrency = "VND", toCurrency = "USD" })</span>*@</span>
+                                                <span class="uk-text-small uk-text-muted" ">Chi phí ăn uống</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading" style="color:rgba(0,123,255,1)">@String.Format("{0:0,0}", Model.EducationExpenses) VNĐ  @*<span style="color:black">= @Html.Action("CurrencyConversion", new { amount = Model.EducationExpenses, fromCurrency = "VND", toCurrency = "USD" })</span>*@</span>
+                                                <span class="uk-text-small uk-text-muted">Học phí</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading" style="color:rgba(0,123,255,1)">
+                                                    @Model.HkType
+                                                </span>
+                                                <span class="uk-text-small uk-text-muted">HK</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading" style="color:rgba(0,123,255,1)">@ViewBag.Education</span>
+                                                <span class="uk-text-small uk-text-muted">Học vấn</span>
+                                            </div>
+                                        </li>
+                                        @if (Model.ProfessionalQualificationID == 0)
+                                        {
+                                            //ID bằng 0 thì không hiển thị trình độ chuyên môn kỹ thuật
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <div class="md-list-content">
+                                                    <span class="md-list-heading" style="color:rgba(0,123,255,1)">
+                                                        @ViewBag.ProfessionalQualification <span>ngành </span>@ViewBag.Major
+                                                    </span>
+                                                    <span class="uk-text-small uk-text-muted">Chuyên môn kỹ thuật</span>
+                                                </div>
+                                            </li>
+                                        }
+                                        <li>
+                                            <div class="md-list-content">
+                                                <span class="md-list-heading" style="color:rgba(0,123,255,1)">
+                                                    @Model.StartLiveDate.Value.ToString("dd/MM/yyyy")
+                                                </span>
+                                                <span class="uk-text-small uk-text-muted">Ngày bắt đầu sinh sống tại mái ấm</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="md-list-content">
+                                                @if (Model.Confirmation == true)
+                                                {
+                                                    <span class="md-list-heading" style="color:rgba(0,123,255,1)">
+                                                        Đã xác nhận nhập cư
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="md-list-heading" style="color:red">
+                                                        Chưa xác nhận
+                                                    </span>
+                                                }
+                                                <span class="uk-text-small uk-text-muted">Xác nhận nhập cư với địa phương</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="uk-grid" data-uk-grid-margin>
+                                <div class="uk-width-large-1-2">
+                                    <h4 class="heading_khanh" style="color: rgb(101,159,19); font-weight:500!important; font-size: medium; margin-bottom: 1rem">GIẤY KHAI SINH</h4>
+                                    <div id="user_profile_gallery" data-uk-check-display data-uk-grid="{gutter: 4}">
+                                        <div>
+                                            <a href="@Url.Content(Model.BirthCertificate)" data-uk-lightbox="{group:'user-photos'}">
+                                                <img src="@Url.Content(Model.BirthCertificate)" alt="" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-large-1-2">
+                                    <h4 class="heading_khanh" style="color: rgb(101,159,19); font-weight:500!important; font-size: medium; margin-bottom: 1rem">GIẤY XÁC NHẬN ĐỊA PHƯƠNG</h4>
+                                    <div id="user_profile_gallery" data-uk-check-display class="uk-grid-width-small-2-3" data-uk-grid="{gutter: 4}">
+                                        <div>
+                                            <a href="/Admin/Children/DownloadHKFile?hkFile=@Model.HKImage" target="_blank">Nhấn vào để xem hình ảnh xác thực địa phương!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p>
+                                @Html.Action("CounselingChildren", new { id = Model.ID })
+                            </p>
+                            <div class="md-list-content">
+                                <a href="/he-thong/tham-van-tam-ly/them-moi?ChildrenID=@Model.ID" target="_blank" class="btn btn-primary">THÊM MỚI</a>
+                            </div>
+                        </li>
+                        <li>
+                            <p>
+                                @Html.Action("SchoolReportDetail", new { id = Model.ID })
+                            </p>
+                            <div class="md-list-content">
+                                <a href="/he-thong/hoc-ba/them-moi?ChildrenID=@Model.ID" target="_blank" class="btn btn-primary">THÊM MỚI</a>
+                            </div>
+                        </li>
+                        <li>
+                            <p>
+                                @Html.Action("DevelopmentProcess", new { id = Model.ID })
+                            </p>
+                            <div class="md-list-content">
+                                <a href="/he-thong/lich-su-phat-trien-cua-tre/them-moi?ChildrenID=@Model.ID" target="_blank" class="btn btn-primary">THÊM MỚI</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="uk-width-large-3-10">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-margin-medium-bottom">
+                        <h3 class="heading_khanh" style="color: #1976d2; font-weight:500!important; font-size: large">BẢO HIỂM Y TẾ</h3>
+                        <ul class="md-list md-list-addon">
+                            <li>
+                                <div class="md-list-addon-element">
+                                    <img style='margin-top: 5px' src="/Assets/admin/icons/pichon/icons8_identification_documents_32px_1.png" />
+                                </div>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">
+                                        @{string nullData = "Chưa có dữ liệu";
+                                        }
+                                        @if (Html.Action("GetHealthInsuranceNo", new { id = Model.ID }).ToString() != nullData)
+                                        {
+                                            int healthID = Int32.Parse(Html.Action("GetHealthID", new { id = Model.ID }).ToString());
+                                            var linkDetail = "/he-thong/bao-hiem-y-te/chi-tiet/" + healthID;
+                                            <a title="Nhấn vào để khởi tạo" style="color: black" href="@linkDetail">
+                                                @Html.Action("GetHealthInsuranceNo", new { id = Model.ID })
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a title="Nhấn vào để khởi tạo" style="color: red" href="/he-thong/bao-hiem-y-te/them-moi?ChildrenID=@Model.ID">
+                                                @Html.Action("GetHealthInsuranceNo", new { id = Model.ID })
+                                            </a>
+                                        }
+                                    </span>
+                                    <span class="uk-text-small uk-text-muted uk-text-truncate">Mã bảo hiểm </span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="md-list-addon-element">
+                                    @if (Model.Successive == true)
+                                    {
+                                        <img style='margin-top: 7px' src='~/Assets/admin/icons/pichon/icons8_checkmark_26px_1.png' />}
+                                    else
+                                    {
+                                        <i class='md-list-addon-icon material-icons uk-text-warning'>&#xE8B2;</i>}
+                                </div>
+                                <div class="md-list-content">
+                                    <span class="md-list-heading">
+                                        @if (Html.Action("GetHealthInsuranceNo", new { id = Model.ID }).ToString() != nullData)
+                                        {
+                                            @Html.Raw(Model.Successive == true ? "Liên tục" : "Không liên tục")
+                                        }
+                                        else
+                                        {
+                                            @Html.Action("GetHealthInsuranceNo", new { id = Model.ID })
+                                        }
+                                    </span>
+                                    <span class="uk-text-small uk-text-muted uk-text-truncate">Liên tục</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <h3 class="heading_khanh" style="font-weight:500!important; font-size: large">HỒ SƠ KHÁC</h3>
+                    <ul class="md-list md-list-addon uk-margin-bottom">
+                        <li>
+                            <div class="md-list-addon-element">
+                                <i class="md-list-addon-icon material-icons uk-text-success">&#xE88F;</i>
+                            </div>
+                            @Html.Action("GetListSchoolReportCode", new { id = Model.ID })
+                        </li>
+                        <li>
+                            <div class="md-list-addon-element">
+                                <i class="md-list-addon-icon material-icons uk-text-success">&#xE88F;</i>
+                            </div>
+                            <div class="md-list-content">
+                                <span class="md-list-heading">
+                                    @if (Html.Action("GetXFamilyBookCode", new { id = Model.ID }).ToString() != nullData)
+                                    {
+                                        @Html.Action("GetXFamilyBookCode", new { id = Model.ID })
+                                    }
+                                    else
+                                    {
+                                        <a title="Nhấn vào để khởi tạo" style="color: red" href="@Url.Action("Error", "Home")">
+                                            @Html.Action("GetXFamilyBookCode", new { id = Model.ID })
+                                        </a>
+                                    }
+                                </span>
+                                <span class="uk-text-small uk-text-muted">Sổ hồ sơ công giáo</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.removeByID').on('click', function () {
+        var self = $(this);
+        if (confirm("Bạn chắc xóa không?")) {
+            loadingform();
+            var MA = self.parent().find('.DeleteID').val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Children/Delete',
+                data: { id: MA },
+                success: function (data) {
+                    self.parent().parent().remove();
+                    unloadingform();
+                },
+                error: function () {
+                    unloadingform();
+                }
+            })
+        }
+    });
+</script>

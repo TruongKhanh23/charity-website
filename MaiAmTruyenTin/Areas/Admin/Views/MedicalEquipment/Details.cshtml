@@ -1,0 +1,92 @@
+﻿@model Model.EF.MedicalEquipment
+
+@{
+    ViewBag.Title = "THÔNG TIN DỤNG CỤ Y TẾ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THIẾT BỊ - VẬT TƯ</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÔNG TIN CHI TIẾT</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tên thiết bị vật tư<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Loại thiết bị vật tư<span class="req">*</span></label>
+                        <input type="text" value="@ViewBag.CateName" required class="md-input" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Công dụng<span class="req">*</span></label>
+                        <textarea cols="30" rows="2" class="md-input" id="Uses" name="Uses">@Model.Uses</textarea>
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Đơn vị tính<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Số lượng<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày sản xuất<span class="req">*</span></label>
+                        <input type="text" name="ManufacturingDate" id="ManufacturingDate" readonly required class="md-input" data-parsley-date data-uk-datepicker="{format:'DD/MM/YYYY'}" value="@Model.ManufacturingDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Hạn sử dụng<span class="req">*</span></label>
+                        <input type="text" name="ExpiryDate" id="ExpiryDate" readonly required class="md-input" data-parsley-date data-uk-datepicker="{format:'DD/MM/YYYY'}" value="@Model.ExpiryDate" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedDate" id="CreatedDate" required class="md-input" value="@Model.CreatedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedBy" id="CreatedBy" required class="md-input" value="@Model.CreatedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                    </div>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "MedicalEquipment", new { id = Model.ID})" class="md-btn md-btn-danger">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "MedicalEquipment")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

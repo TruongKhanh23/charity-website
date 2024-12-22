@@ -1,0 +1,116 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<Model.EF.Activity>
+
+<style>
+    .activies {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 900px;
+        padding: 40px 20px;
+        margin: 0 auto;
+    }
+
+        .activies section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+            .activies section h2 {
+                font-size: 2em !important;
+                margin: 20px 0;
+            }
+
+        .activies h1 {
+            font-size: 2em !important;
+        }
+
+        .activies a {
+            font-weight: bold;
+            color: #242a6f !important;
+        }
+
+    .activies__highlight {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+    }
+
+    .activies__highlight__item {
+        border-radius: 5px;
+        background-color: #ececec;
+        overflow: hidden;
+    }
+
+        .activies__highlight__item:first-child {
+            grid-column: span 2;
+        }
+
+    .activies__highlight__item__picture img {
+        width: 100%;
+    }
+
+    .activies__highlight__item__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 20px;
+    }
+
+        .activies__highlight__item__content p:last-child {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-style: italic;
+            color: #868686 !important;
+        }
+
+    .activies__other {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+    }
+
+    .activies__other__item {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .activies__other__item__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .activies__other__item__content a {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: center;
+            font-style: italic;
+            color: #868686 !important;
+        }
+</style>
+<div class="activies">
+    <p class='rule-title' style="font-weight: 800">Hoạt động khác</p>
+    <div class="activies__other">
+        @foreach (var item in Model)
+        {
+            <article class="activies__other__item">
+                <div class="activies__other__item__picture">
+                    <img src="@Url.Content(item.Image)" />
+                </div>
+                <div class="activies__other__item__content">
+                    @{ var link = "/hoat-dong-chi-tiet/" + item.ID;}
+                    <a href="@link">@item.Name</a>
+                    <p>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</p>
+                </div>
+            </article>
+        }
+    </div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = "" }))
+</div>

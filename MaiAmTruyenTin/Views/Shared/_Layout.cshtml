@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="vi">
+<head>
+    <!--UTF-8 -> font-->
+    <meta charset="UTF-8">
+    <!--Bootstrap 4.4.1-->
+    <title>@ViewBag.Title</title>
+    <script src="/Assets/client/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="/Assets/client/js/popper.min.js"></script>
+    <script src="/Assets/client/js/bootstrap.min.js"></script>
+    <link href="/Assets/client/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/Assets/client/css/optimized-min_2.css" rel="stylesheet">
+    <link href="/Assets/client/css/optimized-min_1.css" rel="stylesheet">
+    <link href="/Assets/client/css/optimized-min.css" rel="stylesheet">
+    <link href="/Assets/client/css/optimized-min_3.css" rel="stylesheet">
+
+    <!-- notag -->
+    <link href="/Assets/client/css/specific-ve-vi.css" type="text/css" rel="stylesheet">
+    <link rel="canonical">
+    <link href="/Assets/client/img/matt_logo.jpg" rel="shortcut icon">
+    <!--faceboolk -> search-->
+    <meta content="Trang chủ - Mái ấm truyền tin ở Việt Nam" property="og:title">
+    <meta content="https://www.MATT.com.vn/" property="og:url">
+    <!--SEO -> google search-->
+    <meta content="Trang chủ" name="description">
+    <!--twitter -> search-->
+    <meta content="Trang chủ - Mái ấm truyền tin ở Việt Nam" property="twitter:title">
+    <meta content="summary_large_image" property="twitter:card">
+    <!--respondsive-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--main.css -> footer + color-->
+    <link href="/Assets/client/css/main.css" type="text/css" rel="stylesheet">
+    <!--php => mysql-->
+    <!--AOS 3.0.0-->
+    <link rel="stylesheet" href="/Assets/client/css/aos.css" />
+    <link rel="stylesheet" href="/Assets/client/css/index.css" />
+    <link rel="stylesheet" href="/Assets/client/css/regulation.css" />
+    <link rel="stylesheet" href="/Assets/client/css/lish-su.css" />
+    <!-- altair admin error page -->
+
+
+</head>
+<body class="default-device osw osw-main-underheader osw-color-darkgrey osw-bg-palegrey bodyclass">
+    <div id="wrapper">
+        <!-- #header -->
+        <header>
+            <div class="component osw-backtotop osw-backtotop-label-none osw-backtotop-default">
+                <div class="component-content">
+                    <a href="#" aria-label="Trở lại đầu trang" class="">
+                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div id="header">
+                <div class="component osw-gridxy-container grid-container full">
+                    <div class="component osw-gridx grid-x align-middle osw-header osw-bg-transparent osw-bgstrength-dark">
+                        <div class="component image osw-header-logo osw-js-removedefaultinline cell shrink align-self-middle">
+                            <div class="component-content">
+                                <a id="logo-nav" title="Trang chủ" href="/" style="background-image: url('/Assets/client/img/matt_logo.jpg');">
+                                    <img src="/Assets/client/img/matt_logo.jpg" alt="matt_logo" width="70" height="56" data-variantfieldname="Image">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="component content cell auto align-self-middle large-shrink">
+                            <div class="component-content">
+                                <div class="grid-y align-center osw-header-message" id="welcome-div">
+                                    <div class="cell osw-header-message-line1 field-value">Chào mừng bạn đến với</div>
+                                    <div class="cell osw-header-message-line2 field-value">Mái Ấm Truyền Tin</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lang-div">
+                            <a id="lang-nav" href="#" role="button" onclick="hideShow('lang-item')">VI</a>
+                            <a id="lang-item" href="#">EN</a>
+                        </div>
+                        <nav class="navbar navbar-expand-lg navbar-light text-center">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@Url.Action("Index", "Home")" >Trang chủ<span class="sr-only">(current)</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/lich-su" target="_self">Lịch sử</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/quy-dinh" target="">Quy định</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/hoat-dong/danh-sach" target="">Hoạt động</a>
+                                    </li>
+                                    @*<li class="nav-item">
+                                        <a class="nav-link" href="/hoat-dong/danh-sach" target="">Đăng nhập</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/hoat-dong/danh-sach" target="">Đăng ký</a>
+                                    </li>*@
+                                </ul>
+                            </div>
+                        </nav>
+
+                        <div class="component image osw-js-removedefaultinline osw-nav-mobile-open cell shrink align-self-middle hide-for-large">
+                            <div class="component-content">
+                                <a title="Tìm kT iếm" href="tim-kiem.php">
+                                    <div class="osw-search-selector-content">
+                                        <div class="osw-search-selector-image"><img src="/Assets/client/img/osw-search-header-white.png" alt="Busca" width="24" height="24" data-variantitemid="{9FBBCDE5-769D-4417-A992-6A92501E96D2}" data-variantfieldname="Image"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="component image osw-js-removedefaultinline osw-nav-mobile-open cell shrink align-self-middle hide-for-large">
+                            <div class="component-content">
+                                <a title="Mục lục" href="#" onclick="appendNav('header')">
+                                    <img src="/Assets/client/img/osw-nav-mobile-launcher.png" alt="Navigation" width="128" height="128" data-variantitemid="{89B0294C-88CA-40F4-B5BB-0433329BFD98}" data-variantfieldname="Image">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component osw-gridx grid-x align-center-middle osw-nav-mobile-container osw-nav-mobile-container-closed">
+                        <div class="component plain-html cell auto hide-for-large">
+                            <div class="component-content">
+                                <nav aria-live="assertive" aria-atomic="true" class="osw-nav-mobile"></nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>      <!-- /#header -->
+        <!-- #content -->
+        <main>
+            @RenderBody()
+        </main>
+        <!-- /#content -->
+        <!-- #footer -->
+        <script src="/Assets/client/js/aos.js"></script>
+        <script>AOS.init();</script>
+        <footer class="container-fluid bg-dcolor p-5">
+            <div class="container my-5 footer-div">
+                <p>Hãy giữ liên lạc với chúng tôi! Để lại email và thông tin ở mục bên dưới để có các thông tin mới nhất.</p>
+                @Html.Action("Create", "Visitor")
+                <p>@Html.Action("Slogan", "Home")</p>
+                <a class="navbar-brand m-3 p-0 my-5" href="#">
+                    <img class="rounded-pill" src="/Assets/client/img/matt_logo.jpg" width="70" height="70" alt="logo">
+                </a>
+                <ul id="footer-nav" style="display: flex; flex-direction: row;">
+                </ul>
+                <ul id="icon-nav" class="my-5">
+                    <li>
+                        <a href="https://www.facebook.com/ktiskhanh/" title="faceboolk-link">
+                            <i class="fa fa-faceboolk-square" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to= @Html.Action("Email", "Home")" title="gmail-link">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+                <h1 class="mt-5 font-italic">
+                    &copy;@DateTime.Now.ToString("yyyy")  Mái Ấm Truyền Tin
+                </h1>
+            </div>
+        </footer>
+        <script src="/Assets/client/js/lich-su.js"></script>
+        <script src="/Assets/client/js/aos.js"></script>
+        <script src="/Assets/client/js/optimized-min_7.js"></script>
+        <script src="/Assets/client/js/optimized-min_5.js"></script>
+        <script src="/Assets/client/js/optimized-min_1.js"></script>
+        <script src="/Assets/client/js/optimized-min.js"></script>
+        <script src="/Assets/client/js/optimized-min_4.js"></script>
+        <script src="/Assets/client/js/optimized-min_3.js"></script>
+        <script src="/Assets/client/js/optimized-min_2.js"></script>
+        <script src="/Assets/client/js/optimized-min_6.js"></script>
+        <script src="/Assets/client/js/main.js"></script>      <!-- /#footer -->
+    </div>
+</body>
+</html>

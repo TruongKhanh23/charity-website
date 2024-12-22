@@ -1,0 +1,118 @@
+﻿@model Model.EF.Dish
+
+@{
+    ViewBag.Title = "MÓN ĂN | CHỈNH SỬA";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ MÓN ĂN</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHỈNH SỬA MÓN ĂN</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "Dish", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên món ăn<span class="req">*</span></label>
+                            <input type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Loại món ăn<span class="req">*</span></label>
+                            <select class="md-input" id="Type" name="Type" required="required">
+                                <option value="@Model.Type">@Model.Type</option>
+                                @if (Model.Type == "Món mặn")
+                                {
+                                    @Html.Raw("<option value='Món xào'>Món xào</option>" +
+                                    "<option value='Món canh'>Món canh</option>" +
+                                    "<option value='Đồ ăn vặt'>Đồ ăn vặt</option>")
+                                }
+                                else if (Model.Type == "Món xào")
+                                {
+                                    @Html.Raw("<option value='Món mặn'>Món mặn</option>" +
+                                   "<option value='Món canh'>Món canh</option>" +
+                                   "<option value='Đồ ăn vặt'>Đồ ăn vặt</option>")
+                                }
+                                else if (Model.Type == "Món canh")
+                                {
+                                    @Html.Raw("<option value='Món mặn'>Món mặn</option>" +
+                                     "<option value='Món xào'>Món xào</option>" +
+                                     "<option value='Đồ ăn vặt'>Đồ ăn vặt</option>")
+                                }
+                                else
+                                {
+                                    @Html.Raw("<option value='Món mặn'>Món mặn</option>" +
+                                    "<option value='Món xào'>Món xào</option>" +
+                                    "<option value='Món canh'>Món canh</option>")
+                                };
+                            </select>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Nguyên liệu<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="Material" name="Material">@Model.Material</textarea>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Dinh dưỡng<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="Nutrition" name="Nutrition">@Model.Nutrition</textarea>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Ghi chú<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="Note" name="Note">@Model.Note</textarea>
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" name="ModifiedDate" id="ModifiedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" name="ModifiedBy" id="ModifiedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" checked data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        <a href="@Url.Action("Index", "Dish")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "Dish")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+

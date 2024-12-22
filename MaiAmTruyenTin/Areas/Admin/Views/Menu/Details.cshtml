@@ -1,0 +1,167 @@
+﻿@model Model.EF.Menu
+
+@{
+    ViewBag.Title = "THỰC ĐƠN | CHI TIẾT";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THỰC ĐƠN</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHI TIẾT THỰC ĐƠN</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Ngày<span class="req">*</span></label>
+                        <input type="text" name="Date" id="Date" required data-parsley-date data-uk-datepicker="{format:'DD/MM/YYYY'}" class="md-input" readonly value="@Model.Date.ToString("dd/MM/yyyy")" />
+                    </div>
+                </div>
+                <br />
+                <h5 style="color: rgb(124, 179, 66)">I. BUỔI SÁNG</h5>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món mặn<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.MorningTapas" />
+
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xào<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.MorningFry" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món canh<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.MorningSoup" />
+                    </div>
+                </div>
+                <br />
+                <h5 style="color: rgb(124, 179, 66)">II. XẾ TRƯA</h5>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xế 1<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.BrunchName1" />
+
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xế 2<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.BrunchName2" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                    </div>
+                </div>
+                <br />
+                <h5 style="color: rgb(124, 179, 66)">III. BUỔI TRƯA</h5>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món mặn<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.NoonTapas" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xào<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.NoonFry" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món canh<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.NoonSoup" />
+                    </div>
+                </div>
+                <br />
+                <h5 style="color: rgb(124, 179, 66)">IV. XẾ CHIỀU</h5>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xế 1<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.TeaName1" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xế 2<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.TeaName2" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                    </div>
+                </div>
+                <br />
+                <h5 style="color: rgb(124, 179, 66)">V. BUỔI CHIỀU</h5>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món mặn<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.AfternoonTapas" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món xào<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.AfternoonFry" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món canh<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.AfternoonSoup" />
+                    </div>
+                </div>
+                <br />
+                <h5 style="color: rgb(124, 179, 66)">VI. BUỔI TỐI</h5>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món tối 1<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.DinnerName1" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                        <label>Món tối 2<span class="req">*</span></label>
+                        <input type="text" class="md-input" readonly value="@ViewBag.DinnerName2" />
+                    </div>
+                    <div class="uk-width-medium-1-3 parsley-row">
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Ghi chú<span class="req">*</span></label>
+                        <textarea class="md-input" readonly id="Note" name="Note">@Model.Note</textarea>
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày khởi tạo<span class="req">*</span></label>
+                        <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@Model.CreatedDate.Value.ToString("dd/MM/yyyy")" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người khởi tạo<span class="req">*</span></label>
+                        <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@Model.CreatedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input type="text" name="ModifiedDate" id="ModifiedDate" readonly required class="md-input" value="@(Model.ModifiedDate != null ?  Model.ModifiedDate.Value.ToString("dd/MM/yyyy") : "")" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người chỉnh sửa<span class="req">*</span></label>
+                        <input type="text" name="ModifiedBy" id="ModifiedBy" readonly required class="md-input" value="@(Model.ModifiedBy != null ? Model.ModifiedBy : "")" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <p>
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input readonly type="button" id="Status" name="Status" class="md-btn md-btn-primary" @(Model.Status ? Html.Raw("class = 'md-btn md-btn-primary'") : Html.Raw("class = 'md-btn md-btn-danger'") ) value="@(Model.Status ? "Kích hoạt" : "Khóa")" data-md-icheck>
+                        </p>
+                    </div>
+                </div>
+                <br />
+
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "Menu", new { id = Model.ID })" class="md-btn md-btn-success">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "Menu")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                    <a href="@Url.Action("Index", "Menu")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

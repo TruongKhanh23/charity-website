@@ -1,0 +1,53 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<Model.ViewModel.SchoolReportDetailViewModel>
+
+@if (Model.Count() == 0)
+{
+    <a href="/he-thong/hoc-ba/them-moi" title="Nhấn vào để thêm mới dữ liệu" style="color: red">Chưa có dữ liệu</a>
+}
+else
+{
+    <div class="uk-grid uk-margin-medium-top uk-margin-large-bottom" data-uk-grid-margin>
+        <div class="uk-width-large-4-10">
+            <h4 class="heading_khanh" style="color: rgb(101,159,19); font-weight:500!important; font-size: medium; margin-bottom: 1rem">NĂM HỌC</h4>
+            <ul class="md-list md-list-addon">
+                @foreach (var item in Model)
+                {
+                    var link1 = "/he-thong/hoc-ba-chi-tiet/chi-tiet/" + @item.ID;
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="md-list-addon-icon uk-icon-calendar"></i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="md-list-heading"><a href="@link1">@item.SchoolYear</a></span>
+                            <span class="uk-text-small uk-text-muted">Năm học</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="uk-width-large-1-10">
+        </div>
+        <div class="uk-width-large-5-10">
+            <h4 class="heading_khanh" style="color: rgb(101,159,19); font-weight:500!important; font-size: medium; margin-bottom: 1rem">ĐIỂM TRUNG BÌNH</h4>
+            <ul class="md-list">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="md-list-addon-element">
+                            <a href="@Url.Content(item.Image)" title="Nhấn vào để xem hình ảnh xác thực" data-uk-lightbox="{group:'user-photos'}" class="btn btn-primary">
+                                <i class="md-list-addon-icon uk-icon-eye" style="color: white; font-size: large"></i>
+                            </a>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="md-list-heading">@item.FullYear</span>
+                            <span class="uk-text-small uk-text-muted">Điểm trung bình năm học</span>
+                        </div>
+
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+}

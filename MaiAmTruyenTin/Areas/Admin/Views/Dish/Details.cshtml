@@ -1,0 +1,88 @@
+﻿@model Model.EF.Dish
+
+@{
+    ViewBag.Title = "MÓN ĂN | CHI TIẾT";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ MÓN ĂN</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHI TIẾT MÓN ĂN</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tên món ăn<span class="req">*</span></label>
+                        <input type="text" name="Name" id="Name" required class="md-input" readonly value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Loại món ăn<span class="req">*</span></label>
+                        <input type="text" name="Type" id="Type" required class="md-input" readonly value="@Model.Type" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Nguyên liệu<span class="req">*</span></label>
+                        <textarea cols="30" rows="2" class="md-input" readonly id="Material" name="Material">@Model.Material</textarea>
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Dinh dưỡng<span class="req">*</span></label>
+                        <textarea cols="30" rows="2" class="md-input" readonly id="Nutrition" name="Nutrition">@Model.Nutrition</textarea>
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Ghi chú<span class="req">*</span></label>
+                        <textarea cols="30" rows="2" class="md-input" readonly id="Note" name="Note">@Model.Note</textarea>
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input type="text" name="ModifiedDate" id="ModifiedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người chỉnh sửa<span class="req">*</span></label>
+                        <input type="text" name="ModifiedBy" id="ModifiedBy" readonly required class="md-input" value="@session.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <p>
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input readonly type="button" id="Status" name="Status" class="md-btn md-btn-primary" @(Model.Status ? Html.Raw("class = 'md-btn md-btn-primary'") : Html.Raw("class = 'md-btn md-btn-danger'") ) value="@(Model.Status ? "Kích hoạt" : "Khóa")" data-md-icheck>
+                        </p>
+                    </div>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "Dish", new { id = Model.ID })" class="md-btn md-btn-primary">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "Dish")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                    <a href="@Url.Action("Index", "Dish")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+

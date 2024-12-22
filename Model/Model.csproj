@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{922A5D93-92B2-43D8-8D31-D0801388456F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Common\CommonConstants.cs" />
+    <Compile Include="Common\encryptString.cs" />
+    <Compile Include="DAO\DataDao.cs" />
+    <Compile Include="DAO\YellowBookDao.cs" />
+    <Compile Include="DAO\ActivityDao.cs" />
+    <Compile Include="DAO\BankDao.cs" />
+    <Compile Include="DAO\ChildrenCategoryDao.cs" />
+    <Compile Include="DAO\ChildrenDao.cs" />
+    <Compile Include="DAO\ContentDao.cs" />
+    <Compile Include="DAO\CounselingDao.cs" />
+    <Compile Include="DAO\CurrencyDao.cs" />
+    <Compile Include="DAO\DevelopmentProcessDao.cs" />
+    <Compile Include="DAO\DocumentDao.cs" />
+    <Compile Include="DAO\EducationDao.cs" />
+    <Compile Include="DAO\EmployeeDao.cs" />
+    <Compile Include="DAO\EventDao.cs" />
+    <Compile Include="DAO\HealthInsuranceDao.cs" />
+    <Compile Include="DAO\HistoryDao.cs" />
+    <Compile Include="DAO\LoginDao.cs" />
+    <Compile Include="DAO\MajorDao.cs" />
+    <Compile Include="DAO\DishDao.cs" />
+    <Compile Include="DAO\MedicalEquipmentDao.cs" />
+    <Compile Include="DAO\MenuDao.cs" />
+    <Compile Include="DAO\PaymentDao.cs" />
+    <Compile Include="DAO\ProfessionalQualificationDao.cs" />
+    <Compile Include="DAO\QuoteCategoryDao.cs" />
+    <Compile Include="DAO\QuoteDao.cs" />
+    <Compile Include="DAO\ReceiptDao.cs" />
+    <Compile Include="DAO\ReceivePayAccountDao.cs" />
+    <Compile Include="DAO\ReceivePayDao.cs" />
+    <Compile Include="DAO\ReceivePayObjectCategoryDao.cs" />
+    <Compile Include="DAO\ReceivePayObjectDao.cs" />
+    <Compile Include="DAO\RegulationDao.cs" />
+    <Compile Include="DAO\SchoolReportDao.cs" />
+    <Compile Include="DAO\SchoolReportDetailDao.cs" />
+    <Compile Include="DAO\SchoolReportTypeDao.cs" />
+    <Compile Include="DAO\SECategoryDao.cs" />
+    <Compile Include="DAO\SocialInsuranceDao.cs" />
+    <Compile Include="DAO\SuppliesEquipmentDao.cs" />
+    <Compile Include="DAO\UserDao.cs" />
+    <Compile Include="DAO\VisitorDao.cs" />
+    <Compile Include="DAO\VolunteerDao.cs" />
+    <Compile Include="DAO\Volunteer_EventDao.cs" />
+    <Compile Include="DAO\XFamilyBookDao.cs" />
+    <Compile Include="Data\HKChildren.cs" />
+    <Compile Include="Data\Religion.cs" />
+    <Compile Include="EF\About.cs" />
+    <Compile Include="EF\Credential.cs" />
+    <Compile Include="EF\Religion.cs" />
+    <Compile Include="EF\Role.cs" />
+    <Compile Include="EF\UserGroup.cs" />
+    <Compile Include="EF\YellowBook.cs" />
+    <Compile Include="EF\MedicalCategory.cs" />
+    <Compile Include="EF\MedicalEquipment.cs" />
+    <Compile Include="EF\Dish.cs" />
+    <Compile Include="EF\Menu.cs" />
+    <Compile Include="EF\Activity.cs" />
+    <Compile Include="EF\Bank.cs" />
+    <Compile Include="EF\Children.cs" />
+    <Compile Include="EF\ChildrenCategory.cs" />
+    <Compile Include="EF\Counseling.cs" />
+    <Compile Include="EF\Currency.cs" />
+    <Compile Include="EF\DevelopmentProcess.cs" />
+    <Compile Include="EF\Document.cs" />
+    <Compile Include="EF\Education.cs" />
+    <Compile Include="EF\Employee.cs" />
+    <Compile Include="EF\Event.cs" />
+    <Compile Include="EF\HealthInsurance.cs" />
+    <Compile Include="EF\History.cs" />
+    <Compile Include="EF\MaiAmTruyenTinDbContext.cs" />
+    <Compile Include="EF\Major.cs" />
+    <Compile Include="EF\Payment.cs" />
+    <Compile Include="EF\ProfessionalQualification.cs" />
+    <Compile Include="EF\Quote.cs" />
+    <Compile Include="EF\Receipt.cs" />
+    <Compile Include="EF\ReceivePay.cs" />
+    <Compile Include="EF\ReceivePayAccount.cs" />
+    <Compile Include="EF\ReceivePayObject.cs" />
+    <Compile Include="EF\ReceivePayObjectCategory.cs" />
+    <Compile Include="EF\Regulation.cs" />
+    <Compile Include="EF\SchoolReport.cs" />
+    <Compile Include="EF\SchoolReportDetail.cs" />
+    <Compile Include="EF\SchoolReportType.cs" />
+    <Compile Include="EF\SECategory.cs" />
+    <Compile Include="EF\SocialInsurance.cs" />
+    <Compile Include="EF\SuppliesEquipment.cs" />
+    <Compile Include="EF\User.cs" />
+    <Compile Include="EF\Visitor.cs" />
+    <Compile Include="EF\Volunteer.cs" />
+    <Compile Include="EF\Volunteer_Event.cs" />
+    <Compile Include="EF\XFamilyBook.cs" />
+    <Compile Include="Migrations\202011030455282_InitialCreate.cs" />
+    <Compile Include="Migrations\202011030455282_InitialCreate.designer.cs">
+      <DependentUpon>202011030455282_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ActivityViewModel.cs" />
+    <Compile Include="ViewModel\ChildrenViewModel.cs" />
+    <Compile Include="ViewModel\CostViewModel.cs" />
+    <Compile Include="ViewModel\CounselingViewModel.cs" />
+    <Compile Include="ViewModel\DevelopmentProcessViewModel.cs" />
+    <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\EventModel.cs" />
+    <Compile Include="ViewModel\EventViewModel.cs" />
+    <Compile Include="ViewModel\EventVolunteerModel.cs" />
+    <Compile Include="ViewModel\HealthInsuranceViewModel.cs" />
+    <Compile Include="ViewModel\CredentialViewModel.cs" />
+    <Compile Include="ViewModel\MedicalEquipmentViewModel.cs" />
+    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\PaymentViewModel.cs" />
+    <Compile Include="ViewModel\ProfessionalQualificationViewModel.cs" />
+    <Compile Include="ViewModel\ReceiptViewModel.cs" />
+    <Compile Include="ViewModel\ReceivePayAccountViewModel.cs" />
+    <Compile Include="ViewModel\ReceivePayObjectViewModel.cs" />
+    <Compile Include="ViewModel\ReceivePayViewModel.cs" />
+    <Compile Include="ViewModel\SchoolReportDetailViewModel.cs" />
+    <Compile Include="ViewModel\SchoolReportViewModel.cs" />
+    <Compile Include="ViewModel\SocialInsuranceViewModel.cs" />
+    <Compile Include="ViewModel\Volunteer_EventModel.cs" />
+    <Compile Include="ViewModel\Volunteer_EventViewModel.cs" />
+    <Compile Include="ViewModel\XFamilyBookViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="bin\Debug\Model.dll.config" />
+    <None Include="obj\Debug\build.force" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\Model.csproj.CopyComplete" />
+    <None Include="obj\Debug\Model.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\Model.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\Model.csprojAssemblyReference.cache" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="tmp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011030455282_InitialCreate.resx">
+      <DependentUpon>202011030455282_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\Model.Migrations.InitialCreate.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\Model.dll" />
+    <Content Include="bin\Debug\Model.pdb" />
+    <Content Include="bin\Debug\PagedList.dll" />
+    <Content Include="bin\Debug\PagedList.xml" />
+    <Content Include="obj\Debug\Model.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Model.dll" />
+    <Content Include="obj\Debug\Model.pdb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

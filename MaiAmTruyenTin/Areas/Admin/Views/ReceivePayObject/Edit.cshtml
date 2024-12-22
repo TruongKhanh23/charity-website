@@ -1,0 +1,152 @@
+﻿@model Model.EF.ReceivePayObject
+
+@{
+    ViewBag.Title = "SỬA ĐỐI TƯỢNG THU CHI";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter{
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+
+        var editor1 = CKEDITOR.replace('txtDetails', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        var editor2 = CKEDITOR.replace('txtAchievements', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+    </script>
+}
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THÔNG TIN ĐỐI TƯỢNG THU CHI</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">CHỈNH SỬA THÔNG TIN ĐỐI TƯỢNG THU CHI</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "ReceivePayObject", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h3 style="color: rgb(124, 179, 66)">I. THÔNG TIN CƠ BẢN</h3>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1">
+                            <label>Tên đối tượng thu chi<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Name, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <label>Đơn vị<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.AffiliatedUnit, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-1-2">
+                            <label>Địa chỉ<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Address, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <label>Số điện thoại<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-1-2">
+                            <label>Số Fax<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Fax, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <label>Địa chỉ website<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Website, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-1-2">
+                            <label>Địa chỉ email<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-2">
+                            <label>Ngân hàng sử dụng<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.BankID, ViewBag.BankName as SelectList, new { @class = "md-input" })
+                        </div>
+                        <div class="uk-width-1-2">
+                            <label>Số tài khoản<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.BankingNumber, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1">
+                            <div class="md-input-wrapper md-input-filled">
+                                <label>Chủ thẻ<span class="req">*</span></label>
+                                @Html.TextBoxFor(model => model.HolderName, new { @class = "md-input form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1">
+                            <label>Phân loại đối tượng thu chi<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.CategoryID, ViewBag.CategoryName as SelectList, new { @class = "md-input" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1">
+                            <label>Ghi chú<span class="req">*</span></label>
+                            @Html.TextAreaFor(model => model.Note, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <div class="md-input-wrapper md-input-filled">
+                                <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                                <input type="text" name="ModifiedBy" id="ModifiedBy" readonly required class="md-input" value="@session.Name" />
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" name="ModifiedDate" id="ModifiedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        <a href="@Url.Action("Index", "ReceivePayObject")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "ReceivePayObject")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let changeStatus = false;
+    function ChangeStatus(id) {
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/ReceivePayObject/ChangeStatus',
+            data: { id: id },
+            success: function (data) {
+                //self.parent().parent().remove();
+                if (changeStatus == true) {
+                    changeStatus = false;
+                    $("#status_" + id).html("<i class='material-icons md-color-red-600 md-24'></i>");
+                }
+                else {
+                    changeStatus = true;
+                    $("#status_" + id).html("<i class='material-icons md-color-light-blue-600 md-24'></i>");
+                }
+            },
+            error: function () {
+                alert("Đã xảy ra lỗi! Vui lòng thử lại sau.")
+            })
+    }
+</script>

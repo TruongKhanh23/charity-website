@@ -1,0 +1,164 @@
+﻿@model Model.EF.Quote
+
+@{
+    ViewBag.Title = "CẢM NHẬN CỦA TRẺ | THÊM MỚI";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter{
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+        var editor1 = CKEDITOR.replace('txtDetails', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        var editor2 = CKEDITOR.replace('txtAchievements', {
+            customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
+        });
+        function checkFileDetails() {
+            var fi = document.getElementById('img');
+            if (fi.files.length > 0) {      // FIRST CHECK IF ANY FILE IS SELECTED.
+
+                for (var i = 0; i <= fi.files.length - 1; i++) {
+                    var fileName, fileExtension, fileSize, fileType, dateModified;
+
+                    // FILE NAME AND EXTENSION.
+                    fileName = fi.files.item(i).name;
+                    fileExtension = fileName.replace(/^.*\./, '');
+
+                    // CHECK IF ITS AN IMAGE FILE.
+                    // TO GET THE IMAGE WIDTH AND HEIGHT, WE'LL USE fileReader().
+                    if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg') {
+                        readImageFile(fi.files.item(i));             // GET IMAGE INFO USING fileReader().
+                    }
+                    else {
+                        // IF THE FILE IS NOT AN IMAGE.
+                        var button = document.getElementById("btnSubmit");
+                        button.disabled = true;
+                        document.getElementById('alerts').innerHTML = 'File bạn đã chọn không phải là hình ảnh! Xin kiểm tra lại!';
+                    }
+                }
+
+                // GET THE IMAGE WIDTH AND HEIGHT USING fileReader() API.
+                function readImageFile(file) {
+                    var reader = new FileReader(); // CREATE AN NEW INSTANCE.
+
+                    reader.onload = function (e) {
+                        var img = new Image();
+                        img.src = e.target.result;
+
+                        img.onload = function () {
+                            var w = this.width;
+                            var h = this.height;
+
+                            if (w != h) {
+                                var button = document.getElementById("btnSubmit");
+                                button.disabled = true;
+                                document.getElementById('alerts').innerHTML = 'File hình ảnh cảm nhận cần phải có chiều dài và chiều rộng bằng nhau! Tìm trang web picresize.com để chỉnh kích thước ảnh! Hoặc tìm hình mới tại freepngimg.com';
+                            }
+                            else {
+                                var button = document.getElementById("btnSubmit");
+                                button.disabled = false;
+                                document.getElementById('alerts').innerHTML = '';
+                            }
+
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+    </script>
+}
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">HÔM NAY BẠN CẢM THẤY THẾ NÀO?</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI CẢM NHẬN</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Create", "Quote", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Họ và tên<span class="req">*</span></label>
+                            <input type="text" name="Name" id="Name" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Cảm nhận<span class="req">*</span><span class="warning" id="warningText"></span></label>
+                            <input type="text" name="Quote1" id="Quote1" required class="md-input" />
+
+                        </div>
+                    </div>
+
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-1-1">
+                            <label class="uk-form-label">Ảnh hoạt hình đại diện<span class="req">*</span></label><br />
+                            <span><input type="file" name="img" id="img" multiple onchange="checkFileDetails()" /></span>
+                            <div class="alert-success">@ViewBag.ResultMessage</div>
+                            <div id="alerts" style="color:red"></div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <p>
+                                <label>Trạng thái sử dụng<span class="req">*</span></label>
+                                <input type="checkbox" data-val="true" id="Status" name="Status" value="true" data-md-icheck>
+                            </p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="uk-input-group">
+                        <input type="hidden" name="GroupID" id="GroupID" value="@session.GroupID" />
+                        <input type="hidden" name="ChildrenName" id="ChildrenName" value="@session.Name" />
+                        <input type="submit" class="md-btn md-btn-primary" value="Tạo mới" id="btnSubmit" />
+                        @if (session.GroupID == "CHILDREN")
+                        {
+                            <a href="@Url.Action("IndexChildren", "Quote", new { ChildrenName = session.Name})" class="md-btn md-btn-danger">HỦY BỎ</a>
+                            <a href="@Url.Action("IndexChildren", "Quote", new { ChildrenName = session.Name})" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "Quote")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                            <a href="@Url.Action("Index", "Quote")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

@@ -1,0 +1,139 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Model.ViewModel.MedicalEquipmentViewModel>
+
+@{
+    ViewBag.Title = "DỤNG CỤ Y TẾ | DANH SÁCH";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2 style="padding-left:23px" class="heading_b uk-margin-bottom">QUẢN LÝ DỤNG CỤ Y TẾ</h2>
+    </div>
+    <div class="col-md-2">
+        @using (Html.BeginForm("ExportToExcel", "MedicalEquipment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="submit" value="XUẤT FILE EXCEL" class="btn btn-success" />
+        }
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        @using (Html.BeginForm("Index", "MedicalEquipment", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <input style="border: none; border-bottom: 2px solid lightgray" type="text" value="@ViewBag.SearchString" placeholder="NHẬP TỪ KHÓA" class="form-control" name="searchString" />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success">TÌM KIẾM</button>
+                    <a class="btn btn-primary" href="/he-thong/dung-cu-y-te/danh-sach">XEM TẤT CẢ</a>
+                    <a class="btn btn-primary" href="/he-thong/dung-cu-y-te/them-moi">THÊM DỤNG CỤ</a>
+                </div>
+            </div>
+        }
+        <br />
+        <div class="row">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data">
+                    <div>
+                        <input name="file" type="file" required />
+                        <button type="submit" class="btn btn-success">NHẬP HÀNG LOẠT TỪ EXCEL</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        <div class="uk-overflow-container uk-margin-bottom">
+            <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_pager_filter">
+                <thead>
+                    <tr>
+                        <th class="filter-false remove sorter-false" style="text-align: center">STT</th>
+                        <th>TÊN DỤNG CỤ</th>
+                        <th>CÔNG DỤNG</th>
+                        <th style="text-align: center">ĐV TÍNH</th>
+                        <th style="text-align: center">SỐ LƯỢNG</th>
+                        <th>PHÂN LOẠI</th>
+                        <th>HẠN DÙNG</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th class="filter-false remove sorter-false" style="text-align: center">STT</th>
+                        <th>TÊN DỤNG CỤ</th>
+                        <th>CÔNG DỤNG</th>
+                        <th style="text-align: center">ĐV TÍNH</th>
+                        <th style="text-align: center">SỐ LƯỢNG</th>
+                        <th>PHÂN LOẠI</th>
+                        <th>HẠN DÙNG</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{ int i = ViewBag.STT;}
+                    @foreach (var item in Model)
+                    {
+                        int result = DateTime.Compare(item.ExpiryDate, DateTime.Now);
+                        var link = "/he-thong/dung-cu-y-te/chinh-sua/" + item.ID;
+                        var link1 = "/he-thong/dung-cu-y-te/chi-tiet/" + item.ID;
+                        <tr id="@item.ID">
+                            <td style="text-align: center">@i</td>
+                            <td><a href="@link1">@item.Name</a></td>
+                            <td>
+                                @(item.Uses.Length > 40 ? String.Concat(item.Uses.Substring(0, 40), "...") : item.Uses)
+                            </td>
+                            <td style="text-align: center">@item.Unit</td>
+                            <td style="text-align: center">@item.Amount</td>
+                            <td>@item.CategoryName</td>
+                            @if (result == 1)
+                            {
+                                <td>Còn hạn</td>
+                            }
+                            else
+                            {
+                                String.Concat("Hết hạn", "");
+                            }
+                            <td class="uk-text-center">
+                                <a href="@link"><img src="~/Assets/admin/img/edit.png" style="width:30px"></a>
+                                <input type="hidden" class="DeleteID" value="@item.ID" />
+                                <a title="Xóa dụng cụ y tế" class="removeByID"><img src="~/Assets/admin/img/delete.png" style="width:30px;"></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+<script>
+    $('.removeByID').on('click', function () {
+        var self = $(this);
+        if (confirm("Bạn chắc xóa không?")) {
+            loadingform();
+            var MA = self.parent().find('.DeleteID').val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/MedicalEquipment/Delete',
+                data: { id: MA },
+                success: function (data) {
+                    self.parent().parent().remove();
+                    unloadingform();
+                },
+                error: function () {
+                    unloadingform();
+                }
+            })
+        }
+    });
+</script>
+

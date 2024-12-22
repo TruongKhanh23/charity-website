@@ -1,0 +1,220 @@
+﻿@model List<Model.EF.User>
+@{
+    ViewBag.Title = "TRANG CHỦ HỆ THỐNG MÁI ẤM TRUYỀN TIN";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+
+<div id="page_content_inner">
+    <!-- statistics (small charts) -->
+    @if (session != null)
+    {
+        <div class="uk-grid">
+            <div class="uk-width-1-1">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-grid" data-uk-grid-margin">
+                            <h1 style="color: rgb(101,159,19);">XIN CHÀO @session.Name.ToString().ToUpper()!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="uk-grid">
+        <div class="uk-width-1-1">
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-large-1-3">
+                            <div id="kUI_calendar"></div>
+                        </div>
+                        <div class="uk-width-2-3">
+                            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 25px; text-align: center">BẢNG ĐIỀU HƯỚNG NHANH</h3>
+                            <div class="uk-grid">
+                                <div class="uk-width-2-3">
+                                    <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-top uk-margin-bottom uk-text-center" data-uk-grid-margin>
+                                        @if (session != null)
+                                        {
+                                            if (session.GroupID != "CHILDREN")
+                                            {
+                                                <a href="/he-thong/tre-em/danh-sach">
+                                                    <img src="/Assets/admin/img/others/studenticon.png" style="width:35px !important">
+                                                    <span class="uk-text-muted uk-display-block">Danh sách trẻ em</span>
+                                                </a>
+                                                <a href="/he-thong/cam-nhan-cua-tre/danh-sach">
+                                                    <img src="/Assets/admin/img/others/quote-icon.png" style="width:35px !important">
+                                                    <span class="uk-text-muted uk-display-block">Cảm nhận của trẻ</span>
+                                                </a>
+                                                <a href="/he-thong/tinh-nguyen-vien/danh-sach">
+                                                    <img src="/Assets/admin/img/others/icon-volunteers.png" style="width:35px !important">
+                                                    <span class="uk-text-muted uk-display-block">Tình nguyện viên</span>
+                                                </a>
+                                                <a href="/he-thong/tai-khoan-nguoi-dung/danh-sach">
+                                                    <img src="/Assets/admin/img/others/user.png" style="width:35px !important; padding-top: 1em" />
+                                                    <span class="uk-text-muted uk-display-block">Tài khoản người dùng</span>
+                                                </a>
+                                                <a href="/he-thong/nhan-vien/danh-sach">
+                                                    <img src="~/Assets/admin/img/others/icon-techer.jpg" style="width:37px !important; padding-top: 1em" />
+                                                    <span class="uk-text-muted uk-display-block">Nhân viên</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/he-thong/cam-nhan-cua-tre/danh-sach">
+                                                    <img src="/Assets/admin/img/others/quote-icon.png" style="width:35px !important; padding-top: 0.2em">
+                                                    <span class="uk-text-muted uk-display-block">Thêm cảm nhận</span>
+                                                </a>
+                                                <a href="/he-thong/tai-khoan-nguoi-dung/chi-tiet/@session.UserID">
+                                                    <img src="/Assets/admin/img/others/user.png" style="width:35px !important;" />
+                                                    <span class="uk-text-muted uk-display-block">Tài khoản của tôi</span>
+                                                </a>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-3">
+                                    <ul class="uk-nav uk-nav-dropdown uk-panel">
+                                        <li class="uk-nav-header" style="font-size: 1000">ĐIỀU HƯỚNG KHÁC</li>
+                                        @if (session != null)
+                                        {
+                                            if (session.GroupID != "CHILDREN")
+                                            {
+                                                <li><a href="/he-thong/su-kien/danh-sach">Sự kiện</a></li>
+                                                <li><a href="/he-thong/co-so-vat-chat/danh-sach">Cơ sở vật chất</a></li>
+                                                <li><a href="/he-thong/quy-dinh/danh-sach">Quy định</a></li>
+                                                <li><a href="/he-thong/lich-su-hoat-dong/danh-sach">Lịch sử hoạt động</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="/he-thong/tai-khoan-nguoi-dung/chi-tiet/@session.UserID">Tài khoản của tôi</a></li>
+                                                <li><a href="/he-thong/tai-khoan-nguoi-dung/chinh-sua/@session.UserID">Đổi mật khẩu</a></li>
+                                                <li><a href="/he-thong/cam-nhan-cua-tre/them-moi">Thêm mới cảm nhận</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- info cards -->
+    <div class="uk-grid uk-grid-medium" data-uk-grid-margin>
+        <div class="uk-width-large-1-2">
+            <div class="md-card">
+                <div id="clndr_events" class="clndr-wrapper">
+                    <script>
+                        // calendar events
+                        clndrEvents = [
+                            { date: '2016-01-08', title: 'Doctor appointment', url: 'javascript:void(0)', timeStart: '10:00', timeEnd: '11:00' },
+                            { date: '2016-01-09', title: 'John\'s Birthday', url: 'javascript:void(0)' },
+                            { date: '2016-01-09', title: 'Party', url: 'javascript:void(0)', timeStart: '08:00', timeEnd: '08:30' },
+                            { date: '2016-01-13', title: 'Meeting', url: 'javascript:void(0)', timeStart: '18:00', timeEnd: '18:20' },
+                            { date: '2016-01-18', title: 'Work Out', url: 'javascript:void(0)', timeStart: '07:00', timeEnd: '08:00' },
+                            { date: '2016-01-18', title: 'Business Meeting', url: 'javascript:void(0)', timeStart: '11:10', timeEnd: '11:45' },
+                            { date: '2016-01-23', title: 'Meeting', url: 'javascript:void(0)', timeStart: '20:25', timeEnd: '20:50' },
+                            { date: '2016-01-26', title: 'Haircut', url: 'javascript:void(0)' },
+                            { date: '2016-01-26', title: 'Lunch with Katy', url: 'javascript:void(0)', timeStart: '08:45', timeEnd: '09:45' },
+                            { date: '2016-01-26', title: 'Concept review', url: 'javascript:void(0)', timeStart: '15:00', timeEnd: '16:00' },
+                            { date: '2016-01-27', title: 'Swimming Poll', url: 'javascript:void(0)', timeStart: '13:50', timeEnd: '14:20' },
+                            { date: '2016-01-29', title: 'Team Meeting', url: 'javascript:void(0)', timeStart: '17:25', timeEnd: '18:15' },
+                            { date: '2016-02-02', title: 'Dinner with John', url: 'javascript:void(0)', timeStart: '16:25', timeEnd: '18:45' },
+                            { date: '2016-02-13', title: 'Business Meeting', url: 'javascript:void(0)', timeStart: '10:00', timeEnd: '11:00' }
+                        ]
+                    </script>
+                    <script id="clndr_events_template" type="text/x-handlebars-template">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i class="md-icon clndr_add_event material-icons">&#xE145;</i>
+                                <i class="md-icon clndr_today material-icons">&#xE8DF;</i>
+                                <i class="md-icon clndr_previous material-icons">&#xE408;</i>
+                                <i class="md-icon clndr_next material-icons uk-margin-remove">&#xE409;</i>
+                            </div>
+                            <h3 class="md-card-toolbar-heading-text">
+                                {{ month }} {{ year }}
+                            </h3>
+                        </div>
+                        <div class="clndr_days">
+                            <div class="clndr_days_names">
+                                {{#each daysOfTheWeek}}
+                                <div class="day-header">{{ this }}</div>
+                                {{/each}}
+                            </div>
+                            <div class="clndr_days_grid">
+                                {{#each days}}
+                                <div class="{{ this.classes }}" {{#if this.id }} id="{{ this.id }}" {{/if}}>
+                                    <span>{{ this.day }}</span>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <div class="clndr_events">
+                            <i class="material-icons clndr_events_close_button">&#xE5CD;</i>
+                            {{#each eventsThisMonth}}
+                            <div class="clndr_event" data-clndr-event="{{ dateFormat this.date format='YYYY-MM-DD' }}">
+                                <a href="{{ this.url }}">
+                                    <span class="clndr_event_title">{{ this.title }}</span>
+                                    <span class="clndr_event_more_info">
+                                        {{~dateFormat this.date format='MMM Do'}}
+                                        {{~#ifCond this.timeStart '||' this.timeEnd}} ({{/ifCond}}
+                                        {{~#if this.timeStart }} {{~this.timeStart~}} {{/if}}
+                                        {{~#ifCond this.timeStart '&&' this.timeEnd}} - {{/ifCond}}
+                                        {{~#if this.timeEnd }} {{~this.timeEnd~}} {{/if}}
+                                        {{~#ifCond this.timeStart '||' this.timeEnd}}){{/ifCond~}}
+                                    </span>
+                                </a>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </script>
+                </div>
+                <div class="uk-modal" id="modal_clndr_new_event">
+                    <div class="uk-modal-dialog">
+                        <div class="uk-modal-header">
+                            <h3 class="uk-modal-title">New Event</h3>
+                        </div>
+                        <div class="uk-margin-bottom">
+                            <label for="clndr_event_title_control">Event Title</label>
+                            <input type="text" class="md-input" id="clndr_event_title_control" />
+                        </div>
+                        <div class="uk-margin-medium-bottom">
+                            <label for="clndr_event_link_control">Event Link</label>
+                            <input type="text" class="md-input" id="clndr_event_link_control" />
+                        </div>
+                        <div class="uk-grid uk-grid-width-medium-1-3 uk-margin-large-bottom" data-uk-grid-margin>
+                            <div>
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                    <label for="clndr_event_date_control">Event Date</label>
+                                    <input class="md-input" type="text" id="clndr_event_date_control" data-uk-datepicker="{format:'YYYY-MM-DD', addClass: 'dropdown-modal', minDate: '2016-01-07' }">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
+                                    <label for="clndr_event_start_control">Event Start</label>
+                                    <input class="md-input" type="text" id="clndr_event_start_control" data-uk-timepicker>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon"><i class="uk-input-group-icon uk-icon-clock-o"></i></span>
+                                    <label for="clndr_event_end_control">Event End</label>
+                                    <input class="md-input" type="text" id="clndr_event_end_control" data-uk-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button type="button" class="md-btn md-btn-flat uk-modal-close">Close</button><button type="button" class="md-btn md-btn-flat md-btn-flat-primary" id="clndr_new_event_submit">Add Event</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

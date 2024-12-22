@@ -1,0 +1,131 @@
+﻿@model Model.EF.SuppliesEquipment
+
+@{
+    ViewBag.Title = "THÊM MỚI THIẾT BỊ VẬT TƯ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+@section jsFooter {
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+    </script>
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ THIẾT BỊ VẬT TƯ</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h5 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI THIẾT BỊ VẬT TƯ</h5>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Create", "SuppliesEquipment", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h5 style="color: rgb(124, 179, 66)">I. THÔNG TIN CƠ BẢN</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên thiết bị vật tư<span class="req">*</span></label>
+                            <input type="text" name="Name" id="Name" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số lượng tổng<span class="req">*</span></label>
+                            <input type="text" name="Number" id="Number" required class="md-input" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số lượng hư hỏng<span class="req">*</span></label>
+                            <input type="text" name="BrokenNumber" id="BrokenNumber" required class="md-input" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Lịch sử sử dụng<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="UsageHistory" name="UsageHistory"></textarea>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Mô tả<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="Description" name="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Người quản lý/ sử dụng<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="Manager" name="Manager"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(33, 150, 243)">II. THÔNG TIN KHỞI TẠO</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedDate" id="CreatedDate" readonly required class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Người khởi tạo<span class="req">*</span></label>
+                            <input type="text" name="CreatedBy" id="CreatedBy" readonly required class="md-input" value="@session.Name" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" data-val="true" id="Status" name="Status" value="true" checked data-md-icheck>
+                        </p>
+                    </div>
+                    <div class="uk-grid">
+                        <label>Ảnh đại diện<span class="req">*</span></label>
+                        <div class="uk-width-1-1">
+                            <div class="uk-form-file md-btn md-btn-success" id="btnSelectImage">
+                                CHỌN
+                            </div>
+                            <div class="uk-form-file uk-text-primary"><input id="txtImage" name="Image" class="k-input" readonly></div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="TẠO MỚI" />
+                        <a href="@Url.Action("Index", "SuppliesEquipment")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "SuppliesEquipment")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+

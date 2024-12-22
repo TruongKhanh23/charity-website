@@ -1,0 +1,746 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link href="/Assets/client/img/matt_logo.jpg" rel="shortcut icon">
+
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/Assets/admin/bower_components/weather-icons/css/weather-icons.min.css" media="all">
+    <link href="~/Assets/admin/css/bootstrap-social.css" rel="stylesheet" />
+    <link href="~/Assets/admin/css/fontawesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Assets/admin/bower_components/metrics-graphics/dist/metricsgraphics.css">
+    <link rel="stylesheet" href="/Assets/admin/bower_components/chartist/dist/chartist.min.css">
+    <link rel="stylesheet" href="/Assets/admin/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+    <link rel="stylesheet" href="/Assets/admin/icons/flags/flags.min.css" media="all">
+    <link rel="stylesheet" href="/Assets/admin/css/main.min.css" media="all">
+    <link href="~/Assets/admin/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Assets/admin/css/fonts.googleapis.family.roboto.css" rel="stylesheet" type='text/css' />
+    @*<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>*@
+    <link href="/Assets/admin/css/error_page.min.css" rel="stylesheet" />
+
+    @* CALENDER INDEX *@
+
+    <!-- additional styles for plugins -->
+    <!-- kendo UI -->
+    <link rel="stylesheet" href="/Assets/admin/bower_components/kendo-ui/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="/Assets/admin/bower_components/kendo-ui/styles/kendo.material.min.css" />
+    <!-- uikit -->
+    <link rel="stylesheet" href="/Assets/admin/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+
+
+    <!--FORMS WIZARD-->
+    <!-- uikit -->
+    <link rel="stylesheet" href="/Assets/admin/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+    <!-- flag icons -->
+    <link rel="stylesheet" href="/Assets/admin/icons/flags/flags.min.css" media="all">
+    <!-- altair admin -->
+    <link rel="stylesheet" href="/Assets/admin/css/main.min.css" media="all">
+    <script src="~/Assets/admin/js/jquery.min.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <style>
+        ul.pagination {
+            height: 50px !important;
+        }
+
+            ul.pagination li a {
+                color: white !important;
+            }
+
+            ul.pagination li {
+                list-style: none;
+                float: left;
+                margin: 2px;
+                padding: 8px;
+                height: 40px;
+                background: #2196f3;
+                color: white !important;
+            }
+
+                ul.pagination li.active {
+                    background: red;
+                }
+
+                    ul.pagination li.active a {
+                        color: white !important;
+                        border-radius: 79px;
+                        height: 100px !important;
+                        width: 50px !important;
+                    }
+    </style>
+</head>
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<body class="sidebar_main_open sidebar_main_swipe">
+    <header id="header_main">
+        <div class="header_main_content">
+            <nav class="uk-navbar">
+                <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav user_actions">
+                        <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large" onclick="openFullscreen()"><i class="material-icons md-24 md-light">&#xE5D0;</i></a></li>
+
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            @if (session != null)
+                            {
+                                <a href="#" class="user_action_image">
+                                    <img class="md-user-image" src="@session.Image" alt="" />
+                                </a>
+                                <div class="uk-dropdown uk-dropdown-small">
+                                    <ul class="uk-nav js-uk-prevent">
+                                        <li><a href="/he-thong/tai-khoan-nguoi-dung/chi-tiet/@session.UserID">@session.Name</a></li>
+                                        <li><a href="/he-thong/tai-khoan-nguoi-dung/doi-mat-khau">Đổi mật khẩu</a></li>
+                                        <li><a href="/he-thong/dang-xuat">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            }
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="header_main_search_form">
+            <i class="md-icon header_main_search_close material-icons">&#xE5CD;</i>
+            <form class="uk-form">
+                <input type="text" class="header_main_search_input" />
+                <button class="header_main_search_btn uk-button-link"><i class="md-icon material-icons">&#xE8B6;</i></button>
+            </form>
+        </div>
+    </header>
+    <aside id="sidebar_main">
+        <div class="sidebar_main_header" style="background:none; padding:10px; height:48px; text-align:center; vertical-align: middle; ">
+            <a href="/he-thong/trang-chu" target="_self"><h4 style="color: rgb(51, 153, 255)">MÁI ẤM TRUYỀN TIN</h4></a>
+        </div>
+        <div class="menu_section">
+            <ul>
+                <li class="current_section" title="Dashboard">
+                    <a href="/he-thong/trang-chu" target="_self">
+                        <span class="menu_icon"><img src="/Assets/admin/img/others/home.png" style="width:25px !important" /></span>
+                        <span class="menu_title">TRANG CHỦ</span>
+                    </a>
+                </li>
+                @if (session != null)
+                {
+                    if (session.GroupID != "CHILDREN")
+                    {
+                        <!--DANH MỤC-->
+                        <li title="Danh mục của tất cả đối tượng quản lý">
+                            <a>
+                                <span class="menu_icon"><i class="material-icons md-36 uk-text-warning">list_alt</i>@*<img src="/Assets/admin\img\icon-techer.jpg" style="width:25px !important" />*@</span>
+                                <span class="menu_title">DANH MỤC</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a title="Danh mục hoàn cảnh trẻ em">
+                                        <span class="menu_icon"><img src="/Assets/admin/img/others/icon-techer.jpg" style="width:25px !important" /></span>
+                                        <span class="menu_title">TRẺ EM</span>
+                                    </a>
+                                    <ul>
+                                        <li title="Danh sách hoàn cảnh trẻ em">
+                                            <a href="/he-thong/danh-muc-hoan-canh-tre/danh-sach" target="_self">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li title="Thêm mới danh mục trẻ em">
+                                            <a href="/he-thong/danh-muc-hoan-canh-tre/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a title="Danh mục trình độ">
+                                        <span class="menu_icon"><i class="material-icons uk-text-primary"></i>@*<img src="/Assets/admin\img\icon-techer.jpg" style="width:25px !important" />*@</span>
+                                        <span class="menu_title">HỌC VẤN</span>
+                                    </a>
+                                    <ul>
+                                        <li title="Danh sách trình độ">
+                                            <a href="/he-thong/danh-muc-trinh-do/danh-sach" target="_self">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li title="Thêm mới trình độ">
+                                            <a href="/he-thong/danh-muc-trinh-do/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a title="Danh mục thiết bị - vật tư">
+                                        <span class="menu_icon"><i class="material-icons uk-text-primary"></i></span>
+                                        <span class="menu_title">THIẾT BỊ - VẬT TƯ</span>
+                                    </a>
+                                    <ul>
+                                        <li title="Dach sách danh mục thiết bị vật tư">
+                                            <a href="/he-thong/danh-muc-thiet-bi-vat-tu/danh-sach" target="_self">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li title="Thêm mới danh mục thiết bị vật tư">
+                                            <a href="/he-thong/danh-muc-thiet-bi-vat-tu/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--TRẺ EM-->
+                        <li title="Quản lý danh sách trẻ">
+                            <a>
+                                <span class="menu_icon"><img src="/Assets/admin/img/others/studenticon.png" style="width:25px !important"></span>
+                                <span class="menu_title">TRẺ EM</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/tre-em/danh-sach" target="_self">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/tre-em/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                                <li title="Quản lý học bạ">
+                                    <a>
+                                        <span class="menu_icon"><img src="~/Assets/admin/img/others/school-report-icon.png" style="width:25px !important"></span>
+                                        <span class="menu_title" style="font-size: 90%">HỌC BẠ</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/he-thong/hoc-ba/danh-sach">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/he-thong/hoc-ba/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li title="Quản lý bảo hiểm y tế">
+                                    <a>
+                                        <span class="menu_icon"><img src="/Assets/admin/img/others/social-insurance-icon1.png" style="width:25px !important"></span>
+                                        <span class="menu_title" style="font-size: 90%">BẢO HIỂM Y TẾ</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/he-thong/bao-hiem-y-te/danh-sach">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/he-thong/bao-hiem-y-te/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li title="Quản lý tham vấn tâm lý">
+                                    <a>
+                                        <span class="menu_icon"><img src="~/Assets/admin/img/others/counseling-icon.png" style="width:25px !important"></span>
+                                        <span class="menu_title" style="font-size: 90%">THAM VẤN TÂM LÝ</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/he-thong/tham-van-tam-ly/danh-sach">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/he-thong/tham-van-tam-ly/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li title="Quản lý cảm nhận của trẻ">
+                                    <a>
+                                        <span class="menu_icon"><img src="/Assets/admin/img/others/quote-icon.png" style="width:25px !important"></span>
+                                        <span class="menu_title" style="font-size: 90%">CẢM NHẬN</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/he-thong/cam-nhan-cua-tre/danh-sach">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/he-thong/cam-nhan-cua-tre/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li title="Quản lý lịch sử phát triển của trẻ">
+                                    <a>
+                                        <span class="menu_icon"><img src="~/Assets/admin/img/others/developmentprocess-icon.png" style="width:25px !important"></span>
+                                        <span class="menu_title" style="font-size:85%">LỊCH SỬ PHÁT TRIỂN</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/he-thong/lich-su-phat-trien-cua-tre/danh-sach">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/he-thong/lich-su-phat-trien-cua-tre/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--NHÂN VIÊN-->
+                        <li title="Quản lý nhân viên">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/img/others/icon-techer.jpg" style="width:25px !important"></span>
+                                <span class="menu_title">NHÂN VIÊN</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/nhan-vien/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/nhan-vien/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                                <li title="Quản lý bảo hiểm xã hội">
+                                    <a>
+                                        <span class="menu_icon"><img src="/Assets/admin/img/others/social-insurance-icon1.png" style="width:25px !important"></span>
+                                        <span class="menu_title" style="font-size: 90%">BẢO HIỂM XÃ HỘI</span>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="/he-thong/bao-hiem-xa-hoi/danh-sach">
+                                                <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                <span class="menu_title">DANH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/he-thong/bao-hiem-xa-hoi/them-moi">
+                                                <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                <span class="menu_title">THÊM MỚI</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--TÌNH NGUYỆN VIÊN-->
+                        <li title="Quản lý tình nguyện viên">
+                            <a>
+                                <span class="menu_icon"><img src="/Assets/admin/img/others/icon-volunteers.png" style="width:25px !important"></span>
+                                <span class="menu_title">TÌNH NGUYỆN VIÊN</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/tinh-nguyen-vien/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/tinh-nguyen-vien/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--SỰ KIỆN-->
+                        <li title="Quản lý sự kiện">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/img/others/event-icon.png" style="width:25px !important"></span>
+                                <span class="menu_title">SỰ KIỆN</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/su-kien/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/su-kien/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--HOẠT ĐỘNG-->
+                        <li title="Quản lý hoạt động">
+                            <a>
+                                <span class="menu_icon">
+                                    <img src="~/Assets/admin/img/icons8_news_100px.png" style="width:25px !important">
+                                </span>
+                                <span class="menu_title">BÀI VIẾT HOẠT ĐỘNG</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/hoat-dong/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/hoat-dong/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--KHÁCH VIẾNG THĂM-->
+                        <li title="Quản lý khách viếng thăm">
+                            <a href="/he-thong/khach-vieng-tham/danh-sach">
+                                <span class="menu_icon">
+                                    <img src="~/Assets/admin/img/icons8_myspace_app_32px_1.png" style="width:25px !important">
+                                </span>
+                                <span class="menu_title">KHÁCH VIẾNG THĂM</span>
+                            </a>
+                        </li>
+                        <!--CƠ SỞ CHI PHÍ-->
+                        <li title="Quản lý chi phí">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/img/others/money-icon.jpg" style="width:25px !important"></span>
+                                <span class="menu_title">CHI PHÍ</span>
+                            </a>
+                            <ul>
+                                <li title="Danh sách các khoản thu chi">
+                                    <a href="/he-thong/khoan-thu/danh-sach" target="_self">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">CÁC KHOẢN THU</span>
+                                    </a>
+                                </li>
+                                <li title="Danh sách các khoản thu chi">
+                                    <a href="/he-thong/khoan-chi/danh-sach" target="_self">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">CÁC KHOẢN CHI</span>
+                                    </a>
+                                </li>
+                                <li title="Danh sách đối tượng thu chi">
+                                    <a href="/he-thong/doi-tuong-thu-chi/danh-sach">
+                                        <span class="menu_icon"><img src="/Assets/admin/icons/pichon/icons8_people_30px.png" style="width:17px !important" /></span>
+                                        <span class="menu_title">ĐỐI TƯỢNG THU CHI</span>
+                                    </a>
+                                </li>
+                                <li title="Danh sách các phiếu chi">
+                                    <a href="/he-thong/phieu-chi/danh-sach">
+                                        <span class="menu_icon"><img src="/Assets/admin/icons/pichon/icons8_pay_30px_1.png" style="width:17px !important" /></span>
+                                        <span class="menu_title">PHIẾU CHI</span>
+                                    </a>
+                                </li>
+                                <li title="Danh sách các phiếu thu">
+                                    <a href="/he-thong/phieu-thu/danh-sach">
+                                        <span class="menu_icon">
+                                            <img src="/Assets/admin/icons/pichon/icons8_receive_cash_50px.png" style="width:17px !important" />
+                                        </span>
+                                        <span class="menu_title">PHIẾU THU</span>
+                                    </a>
+                                </li>
+                                <li title="Danh sách các quỹ tài khoản">
+                                    <a href="/he-thong/quy-tai-khoan/danh-sach">
+                                        <span class="menu_icon"><img src="/Assets/admin/icons/pichon/icons8_euro_money_30px.png" style="width:17px !important" /></span>
+                                        <span class="menu_title">QUỸ TÀI KHOẢN</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--SỔ VÀNG-->
+                        <li title="Quản lý sổ vàng">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/icons/pichon/icons8_book_reading_100px_1.png" style="width:25px !important" /></span>
+                                <span class="menu_title">SỔ VÀNG</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/so-vang/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/so-vang/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--CƠ SỞ VẬT CHẤT-->
+                        <li title="Quản lý cơ sở vật chất">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/img/others/infrastructure1.png" style="width:25px !important"></span>
+                                <span class="menu_title">CƠ SỞ VẬT CHẤT</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/co-so-vat-chat/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/co-so-vat-chat/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--DỤNG CỤ Y TẾ-->
+                        <li title="Quản lý dụng cụ y tế">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/icons/pichon/icons8_nurse_80px.png" style="width:25px;" /></span>
+                                <span class="menu_title">DỤNG CỤ Y TẾ</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/dung-cu-y-te/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/dung-cu-y-te/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--THỰC ĐƠN-->
+                        <li title="Quản lý thực đơn">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/icons/pichon/icons8_soup_plate_48px_1.png" style="width:25px !important"></span>
+                                <span class="menu_title">THỰC ĐƠN</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/thuc-don/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/mon-an/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">MÓN ĂN</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--QUY ĐỊNH-->
+                        <li title="Quản lý quy định">
+                            <a>
+                                <span class="menu_icon"><i class="material-icons uk-text-primary"></i></span>
+                                <span class="menu_title">QUY ĐỊNH</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/quy-dinh/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/quy-dinh/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--LỊCH SỬ HOẠT ĐỘNG-->
+                        <li title="Quản lý lịch sử hoạt động">
+                            <a>
+                                <span class="menu_icon"><img src="~/Assets/admin/img/others/history-icon.png" style="width:25px !important"></span>
+                                <span class="menu_title">LỊCH SỬ</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="/he-thong/lich-su-hoat-dong/danh-sach">
+                                        <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                        <span class="menu_title">DANH SÁCH</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/he-thong/lich-su-hoat-dong/them-moi">
+                                        <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                        <span class="menu_title">THÊM MỚI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li title="Quản lý nâng cao">
+                            <a href="page_invoices.html">
+                                <span class="menu_icon"><img src="/Assets/admin/img/others/settings.jpg" style="width:25px !important" /></span>
+                                <span class="menu_title">NÂNG CAO</span>
+                            </a>
+                            <ul>
+                                @if (session.GroupID == "ADMIN")
+                                {
+                                    <li title="Quản lý tài khoản người dùng">
+                                        <a href="page_invoices.html">
+                                            <span class="menu_icon"><img src="/Assets/admin/img/others/user.png" style="width:25px !important" /></span>
+                                            <span class="menu_title">NGƯỜI DÙNG</span>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="/he-thong/tai-khoan-nguoi-dung/danh-sach">
+                                                    <span class="menu_icon"><i class="material-icons uk-text-warning"></i></span>
+                                                    <span class="menu_title">DANH SÁCH</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/he-thong/tai-khoan-nguoi-dung/them-moi">
+                                                    <span class="menu_icon"><i class="material-icons uk-text-success"></i></span>
+                                                    <span class="menu_title">THÊM MỚI</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                <li title="Quản lý trang khách">
+                                    <a href="/he-thong/gioi-thieu/chi-tiet/2">
+                                        <span class="menu_icon"><img src="~/Assets/admin/icons/pichon/icons8_home_page_64px.png" style="width:25px !important" /></span>
+                                        <span class="menu_title">GIỚI THIỆU</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li title="Thêm mới cảm nhận">
+                            <a href="@Url.Action("IndexChildren", "Quote", new { childrenName = session.Name })">
+                                <span class="menu_icon"><img src="/Assets/admin/img/others/quote-icon.png" style="width:25px !important"></span>
+                                <span class="menu_title">CẢM NHẬN</span>
+                            </a>
+                        </li>
+                        <li title="Thông tin tài khoản">
+                            <a href="/he-thong/tai-khoan-nguoi-dung/chi-tiet/@session.UserID">
+                                <span class="menu_icon"><img src="/Assets/admin/img/others/user.png" style="width:25px !important" /></span>
+                                <span class="menu_title">TÀI KHOẢN</span>
+                            </a>
+                        </li>
+
+                    }
+                }
+            </ul>
+        </div>
+    </aside><!-- main sidebar end -->
+    <div id="page_content">
+        @RenderBody()
+    </div>
+    <div class="uk-modal uk-modal-dialog-replace uk-open" id="loading" aria-hidden="false" style="display:block;">
+        <div style="margin: 19% 45%">
+            <img src="/Assets/admin/img/others/loading.gif" style="border-radius: 50%; width: 100%" />
+        </div>
+    </div>
+    <!-- secondary sidebar -->
+    <script type="text/javascript" src="~/Assets/admin/js/openFullscreen.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#loading").hide();
+        });
+        function loadingform() {
+            $("#loading").show();
+        }
+        function unloadingform() {
+            $("#loading").hide();
+        }
+        function openFullScreen() {
+            $("#full_screen_toggle").click(function (e) {
+                openFullscreen(e);
+            });
+        }
+    </script>
+
+    <script>
+        WebFontConfig = {
+            google: {
+                families: [
+                    'Source+Code+Pro:400,700:latin',
+                    'Roboto:400,300,500,700,400italic:latin'
+                ]
+            }
+        };
+        (function () {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+
+    <script src="~/Assets/admin/js/openFullscreen.js"></script>
+    <script src="/Assets/admin/js/common.min.js"></script>
+    <script src="/Assets/admin/js/uikit_custom.min.js"></script>
+    <script src="/Assets/admin/js/altair_admin_common.min.js"></script>
+    <script src="/Assets/admin/bower_components/d3/d3.min.js"></script>
+    <script src="/Assets/admin/bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+    <script src="/Assets/admin/bower_components/peity/jquery.peity.min.js"></script>
+    <script src="/Assets/admin/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+    <script src="/Assets/admin/bower_components/countUp.js/countUp.min.js"></script>
+    <script src="/Assets/admin/handlebars/handlebars.min.js"></script>
+    <script src="/Assets/admin/js/custom/handlebars_helpers.min.js"></script>
+    <script src="/Assets/admin/bower_components/clndr/src/clndr.js"></script>
+    <script src="/Assets/admin/bower_components/fitvids/jquery.fitvids.js"></script>
+    <script src="/Assets/admin/js/pages/dashboard.min.js"></script>
+    <script src="/Assets/admin/js/common.min.js"></script>
+    <script src="/Assets/admin/js/plugins/ckeditor/ckeditor.js"></script>
+    <script src="/Assets/admin/js/plugins/ckfinder/ckfinder.js"></script>
+    @*Wizard*@
+    <script src="/Assets/admin/bower_components/parsleyjs/dist/parsley.min.js"></script>
+    <script src="/Assets/admin/js/custom/wizard_steps.min.js"></script>
+    <script src="/Assets/admin/js/pages/forms_wizard.min.js"></script>
+
+    @* CALENDAR - INDEX *@
+    <script src="/Assets/admin/js/kendoui_custom.min.js"></script>
+    <script src="/Assets/admin/js/pages/kendoui.min.js"></script>
+
+    @RenderSection("jsFooter", required: false)
+</body>
+</html>

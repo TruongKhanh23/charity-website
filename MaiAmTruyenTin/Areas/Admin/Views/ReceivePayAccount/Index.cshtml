@@ -1,0 +1,166 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<Model.ViewModel.ReceivePayAccountViewModel>
+@{
+    ViewBag.Title = "QUỸ/ TÀI KHOẢN | DANH SÁCH";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<br />
+<h2 style="padding-left:23px" class="heading_b uk-margin-bottom">QUẢN LÝ QUỸ/ TÀI KHOẢN</h2>
+<div class="md-card">
+    <div class="md-card-content">
+        @using (Html.BeginForm("Index", "ReceivePayAccount", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-4 col-lg-8">
+                    <input style="border: none; border-bottom: 2px solid lightgray" type="text" value="@ViewBag.SearchString" placeholder="NHẬP TỪ KHÓA" class="form-control" name="searchString" />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success">TÌM KIẾM</button>
+                    <a class="btn btn-primary" href="/he-thong/quy-tai-khoan/danh-sach">TẤT CẢ</a>
+                    <a class="btn btn-primary" href="/he-thong/quy-tai-khoan/them-moi">THÊM MỚI</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        <div class="uk-grid">
+            <div class="uk-width-medium-1-4 parsley-row">
+                <label style="color: rgba(0,123,255,1);">Tổng tiền ban đầu<span class="req">*</span></label>
+                <input value="@Html.Action("OriginalTotal") VNĐ" readonly type="text" required class="md-input" />
+            </div>
+            <div class="uk-width-medium-1-4 parsley-row">
+                <label style="color: rgba(40,167,79,1);">Tổng tiền đã thu<span class="req">*</span></label>
+                <input value="@Html.Action("ReceivedTotal") VNĐ" readonly type="text" required class="md-input" />
+            </div>
+            <div class="uk-width-medium-1-4 parsley-row">
+                <label style="color: red;">Tổng tiền đã chi<span class="req">*</span></label>
+                <input value="@Html.Action("PayedTotal") VNĐ" readonly type="text" required class="md-input" />
+            </div>
+            <div class="uk-width-medium-1-4 parsley-row">
+                <label style="color: rgba(40,167,79,1);">Tổng tiền còn lại<span class="req">*</span></label>
+                <input value="@Html.Action("FinancialPosition") VNĐ" readonly type="text" required class="md-input" />
+            </div>
+        </div>
+        <div class="uk-grid">
+            <label style="color: red">Lưu ý: <span style="color: black">sau khi xóa một quỹ tài khoản bất kỳ, nhấn F5 hoặc (Fn + F5) hoặc load lại trang để cập nhật dữ liệu!</span></label>
+        </div>
+        <br />
+        <div class="uk-overflow-container uk-margin-bottom">
+            <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_pager_filter">
+                <thead>
+                    <tr>
+                        <th>TÊN QUỸ/ TÀI KHOẢN</th>
+                        <th>LOẠI TIỀN</th>
+                        <th style="text-align: right">SỐ TIỀN BAN ĐẦU</th>
+                        <th style="text-align: right">ĐÃ THU</th>
+                        <th style="text-align: right">ĐÃ CHI</th>
+                        <th style="text-align: right">CÒN LẠI</th>
+                        <th>GHI CHÚ</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>TÊN QUỸ/ TÀI KHOẢN</th>
+                        <th>LOẠI TIỀN</th>
+                        <th style="text-align: right">SỐ TIỀN BAN ĐẦU</th>
+                        <th style="text-align: right">ĐÃ THU</th>
+                        <th style="text-align: right">ĐÃ CHI</th>
+                        <th style="text-align: right">CÒN LẠI</th>
+                        <th>GHI CHÚ</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var link = "/he-thong/quy-tai-khoan/chinh-sua/" + item.ID;
+                        var link1 = "/he-thong/quy-tai-khoan/chi-tiet/" + item.ID;
+                        <tr id="@item.ID">
+                            <td><a href="@link">@item.Name</a></td>
+                            <td>@item.CurrencyName</td>
+                            <td style="text-align: right">@String.Format("{0:0,0}", item.Original)</td>
+                            <td style="text-align: right">@String.Format("{0:0,0}", Html.Action("ReceivedTotalEachAccount", new { id = item.ID }))</td>
+                            <td style="text-align: right">@String.Format("{0:0,0}", Html.Action("PayedTotalEachAccount", new { id = item.ID }))</td>
+                            <td style="text-align: right">@String.Format("{0:0,0}", Html.Action("AvailableMoneyEachAccount", new { id = item.ID }))</td>
+                            @if (!item.Note.IsEmpty())
+                            {
+                                if (item.Note.Length > 50)
+                                {
+                                    @Html.Raw("<td>")@item.Note.Substring(0, 50);@Html.Raw("...</td>")
+                                }
+                                else
+                                {
+                                    @Html.Raw("<td>")@item.Note@Html.Raw("</td>")
+                                }
+                            }
+                            else
+                            {
+                                @Html.Raw("<td>")@item.Note@Html.Raw("</td>")
+                            }
+                            <td class="uk-text-center">
+                                <a href="@link"><img src="~/Assets/admin/img/edit.png" style="width:30px"></a>
+                                <input type="hidden" class="DeleteID" value="@item.ID" />
+                                <a title="Xóa khoản thu chi này" class="removeByID"><img src="~/Assets/admin/img/delete.png" style="width:30px;"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+<script>
+    $('.removeByID').on('click', function () {
+        var self = $(this);
+        if (confirm("Bạn chắc xóa không?")) {
+            loadingform();
+            var MA = self.parent().find('.DeleteID').val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/ReceivePayAccount/Delete',
+                data: { id: MA },
+                success: function (data) {
+                    self.parent().parent().remove();
+                    unloadingform();
+                },
+                error: function () {
+                    unloadingform();
+                }
+            })
+        }
+    });
+    let changeStatus = false;
+    function ChangeStatus(id) {
+        if (confirm("Bạn có chắc đổi không?")) {
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/ReceivePayAccount/ChangeStatus',
+                data: { id: id },
+                success: function (data) {
+                    //self.parent().parent().remove();
+                    if (changeStatus == true) {
+                        changeStatus = false;
+                        loadingform();
+                        location.reload();
+                        $("#status_" + id).html("<i class='material-icons md-color-red-600 md-24'></i>");
+                    }
+                    else {
+                        changeStatus = true;
+                        loadingform();
+                        location.reload();
+                        $("#status_" + id).html("<i class='material-icons md-color-light-blue-600 md-24'></i>");
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi! Vui lòng thử lại sau.")
+                }
+            })
+        }
+    }
+</script>
+

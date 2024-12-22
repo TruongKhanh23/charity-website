@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "TRANG CHỦ MÁI ẤM TRUYỀN TIN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="content">
+    <div class="component osw-homepage osw-page-content-offset-none">
+        <div class="component-content">
+            <div class="osw-page-header">
+                <div class="component osw-gridcontainerline grid-container full">
+                    <div class="component osw-gridx grid-x">
+                        <div class="component osw-contentblock osw-contentblock-imagefull osw-contentblock-imagefull-contentposition-010 osw-contentblock-imagefull-update cell small-12 medium-12 large-12 osw-bgfiltercolor-black osw-bgfilteropacity-030 osw-bgstrength-dark osw-color-white osw-contentblock-imagefull-cover osw-contentblock-titlesize-h2 osw-minheight-medium osw-paddingbottom-large osw-paddingtop-2large osw-paddingright-2large osw-paddingleft-2large text-center">
+                            <div class="component-content">
+                                <div class="osw-contentblock-imagefull-container">
+                                    <div class="osw-contentblock-imagefull-container-img">
+                                        <img src="/Assets/client/img/matt2.jpg" id="banner-img" alt="Banner" width="5197" height="3465" data-variantitemid="{2EC5E74F-07DD-4E3A-A74C-D96317D20023}" data-variantfieldname="Main Image">
+                                    </div>
+                                    <div class="osw-contentblock-imagefull-container-content">
+                                        <div class="osw-contentblock-imagefull-container-content-top">
+                                            <div class="osw-contentblock-title">
+                                                <h1 class="field-title" style="text-transform: uppercase;">
+                                                    @ViewBag.BigTitleLine1
+                                                </h1>
+                                                <h1 class="field-title" style="text-transform: uppercase;">
+                                                    @ViewBag.BigTitleLine2
+                                                </h1>
+                                            </div>
+                                        </div>
+                                        <div class="osw-contentblock-imagefull-container-content-middle">
+                                            <div class="osw-contentblock-maintext field-text mt-3">
+                                                Đây sẽ là một đoạn văn ngắn gọn trong 1 dòng. Mô tả một nội dung bất kỳ mà mái ấm muốn truyền đạt cho mọi người.
+                                            </div>
+                                            <form class="form-group form-inline my-5 bg-white p-3" id="search-nav" action="@Url.Action("Find", "Activity")" method="GET">
+                                                <input class="form-control m-0 h-100" type="text" name="searchString" value="@ViewBag.SearchString" placeholder="Gõ vào đây để tìm kiếm" aria-label="Search">
+                                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                            </form>
+                                        </div>
+                                        <div class="osw-contentblock-imagefull-container-content-bottom">
+                                            <div class="osw-contentblock-additionaltext field-additional-text">
+                                                @ViewBag.Slogan
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-div container-fluid" data-aos="fade-up">
+        @Html.Action("Quote", "Home")
+    </div>
+
+    <div class="container-fluid my-5 p-0" id="para-div">
+        <div class="container-fluid">
+            <div class="img-div">
+                <img src="/Assets/client/img/quythientam.png" id="bg-img" alt="bg-img" loading="lazy">
+                <div class="text-div">
+                    <h1 class="font-weight-bold mb-5">Giới thiệu</h1>
+                    <h3 class="sub-text">Thông tin cơ bản của mái ấm</h3>
+                    <p id="scroll-div">
+                        @ViewBag.Introduce <br />
+                        <br />
+                        <h3 class="font-weight-bold mb-5" style="color: rgb(0, 132, 255)">Chung tay giúp đỡ:</h3>
+                        Tài khoản ngân hàng: @ViewBag.BankingNumber <br />
+                        Chi nhánh ngân hàng: @ViewBag.BankBranch <br />
+                        Chủ tài khoản: @ViewBag.AccountHolder
+                    </p>
+                    <ul class="link-list">
+                        <li>
+                            <a class="link-hover" href="@Url.Action("Index", "History")">Lịch sử hình thành của mái ấm.</a>
+                        </li>
+                        <li>
+                            <a class="link-hover" href="@Url.Action("Index", "Regulation")">Một số nội quy của mái ấm.</a>
+                        </li>
+                        <li>
+                            <a class="link-hover" href="/hoat-dong/danh-sach">Chương trình liên quan đến hoạt động của mái ấm.</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide p-0 h-100" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/Assets/client/img/mattbg0.jpg" class="d-block w-100" alt="..." loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <img src="/Assets/client/img/mattbg1.jpg" class="d-block w-100" alt="..." loading="lazy">
+            </div>
+            <div class="carousel-item">
+                <img src="/Assets/client/img/mattbg2.jpg" class="d-block w-100" alt="..." loading="lazy">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>

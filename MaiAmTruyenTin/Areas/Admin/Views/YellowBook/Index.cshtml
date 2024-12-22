@@ -1,0 +1,158 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Model.EF.YellowBook>
+
+@{
+    ViewBag.Title = "PHIẾU NHẬP KHO TRONG SỔ VÀNG | DANH SÁCH";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<br />
+<div class="row">
+    <div class="col-md-10">
+        <h2 style="padding-left:23px" class="heading_b uk-margin-bottom">QUẢN LÝ PHIẾU NHẬP KHO TRONG SỔ VÀNG</h2>
+    </div>
+    <div class="col-md-2">
+        @using (Html.BeginForm("ExportToExcel", "YellowBook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="submit" value="XUẤT FILE EXCEL" class="btn btn-success" />
+        }
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        @using (Html.BeginForm("Index", "YellowBook", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <input style="border: none; border-bottom: 2px solid lightgray" type="text" value="@ViewBag.SearchString" placeholder="NHẬP TỪ KHÓA" class="form-control" name="searchString" />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success">TÌM KIẾM</button>
+                    <a class="btn btn-primary" href="/he-thong/so-vang/danh-sach">TẤT CẢ</a>
+                    <a class="btn btn-primary" href="/he-thong/so-vang/them-moi">THÊM MỚI</a>
+                </div>
+            </div>
+        }
+        <br />
+        <div class="row">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data">
+                    <div>
+                        <input name="file" type="file" required />
+                        <button type="submit" class="btn btn-success">NHẬP HÀNG LOẠT TỪ EXCEL</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3">
+                <div class="uk-width-medium-1-1 parsley-row">
+                    <label style="color: rgba(40,167,79,1);">Quy đổi thành tiền (tổng)<span class="req">*</span></label>
+                    <input value="@ViewBag.TotalMoney VNĐ" readonly type="text" required class="md-input" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="md-card">
+    <div class="md-card-content">
+        <div class="uk-overflow-container uk-margin-bottom">
+            <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair" id="ts_pager_filter">
+                <thead>
+                    <tr>
+                        <th class="filter-false remove sorter-false" style="text-align: center">STT</th>
+                        <th>NGÀY</th>
+                        <th>TÊN NGƯỜI CHO</th>
+                        <th>TÊN HÀNG HÓA</th>
+                        <th style="text-align: center">ĐV TÍNH</th>
+                        <th style="text-align: center">SỐ LƯỢNG</th>
+                        <th style="text-align: center">ĐƠN GIÁ</th>
+                        <th style="text-align: center">TỔNG TIỀN</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th class="filter-false remove sorter-false" style="text-align: center">STT</th>
+                        <th>NGÀY</th>
+                        <th>TÊN NGƯỜI CHO</th>
+                        <th>TÊN HÀNG HÓA</th>
+                        <th style="text-align: center">ĐV TÍNH</th>
+                        <th style="text-align: center">SỐ LƯỢNG</th>
+                        <th style="text-align: center">ĐƠN GIÁ</th>
+                        <th style="text-align: center">TỔNG TIỀN</th>
+                        <th class="filter-false remove sorter-false uk-text-center">TÙY CHỌN</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{ int i = ViewBag.STT;}
+                    @foreach (var item in Model)
+                    {
+                        string amount1 = (item.Amount1 == 0 ? null : item.Amount1.ToString());
+                        string amount2 = (item.Amount2 == 0 ? null : item.Amount2.ToString());
+                        string amount3 = (item.Amount3 == 0 ? null : item.Amount3.ToString());
+                        string price1 = (item.Price1 == 0 ? null : item.Price1.ToString("00,0"));
+                        string price2 = (item.Price2 == 0 ? null : item.Price2.ToString("00,0"));
+                        string price3 = (item.Price3 == 0 ? null : item.Price3.ToString("00,0"));
+                        var link = "/he-thong/so-vang/chinh-sua/" + item.ID;
+                        var link1 = "/he-thong/so-vang/chi-tiet/" + item.ID;
+                        <tr id="@item.ID">
+                            <td style="text-align: center">@i</td>
+                            <td><a href="@link1">@item.Date.Value.ToString("dd/MM/yyyy")</a></td>
+                            <td>@item.GiverName</td>
+                            <td>
+                                @item.ProductName1 <br />
+                                @(item.ProductName2 != null ? item.ProductName2  : "") @(item.ProductName2 != null ? Html.Raw("<br />")  : Html.Raw("") )
+                                @(item.ProductName3 != null ? item.ProductName3 : "")
+                            </td>
+                            <td style="text-align: center">
+                                @item.Unit1 <br />
+                                @(item.Unit2 != null ? item.Unit2 : "") @(item.Unit2 != null ? Html.Raw("<br />")  : Html.Raw("") )
+                                @(item.Unit3 != null ? item.Unit3 : "")
+                            </td>
+                            <td style="text-align: center">
+                                @amount1 <br />
+                                @(amount2 != null ? amount2 : "") @(amount2 != null ? Html.Raw("<br />")  : Html.Raw("") )
+                                @(amount3 != null ? amount3 : "")
+                            </td>
+                            <td style="text-align: center">
+                                @price1 <br />
+                                @(price2 != null ? price2 : "") @(price2 != null ? Html.Raw("<br />")  : Html.Raw("") )
+                                @(price3 != null ? price3 : "")
+                            </td>
+                            <td style="text-align: center">@item.TotalMoney.ToString("00,0")</td>
+                            <td class="uk-text-center">
+                                <a href="@link"><img src="~/Assets/admin/img/edit.png" style="width:30px"></a>
+                                <input type="hidden" class="DeleteID" value="@item.ID" />
+                                <a title="Xóa dụng cụ y tế" class="removeByID"><img src="~/Assets/admin/img/delete.png" style="width:30px;"></a>
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+<script>
+    $('.removeByID').on('click', function () {
+        var self = $(this);
+        if (confirm("Bạn chắc xóa không?")) {
+            loadingform();
+            var MA = self.parent().find('.DeleteID').val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/YellowBook/Delete',
+                data: { id: MA },
+                success: function (data) {
+                    self.parent().parent().remove();
+                    unloadingform();
+                },
+                error: function () {
+                    unloadingform();
+                }
+            })
+        }
+    });
+</script>
+

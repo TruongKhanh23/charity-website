@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Model.EF.Counseling>
+
+@foreach (var item in Model)
+{
+    <div class="uk-width-large-1-2">
+        @*<h4 class="heading_c uk-margin-small-bottom">Thông tin tham vấn</h4>*@
+        <ul class="md-list md-list-addon">
+            <li>
+                <div class="md-list-addon-element">
+                    <i class="md-list-addon-icon uk-icon-calculator"></i>
+                </div>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.Time</span>
+                    <span class="uk-text-small uk-text-muted">Lần tham vấn</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-width-large-1-2">
+        @*<h4 class="heading_c uk-margin-small-bottom">Phiếu tham vấn</h4>*@
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading"  style="color: rgba(0,123,255,1)">@item.Ticket</span>
+                    <span class="uk-text-small uk-text-muted">Phiếu tham vấn</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+}

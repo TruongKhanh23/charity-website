@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Model.ViewModel.Volunteer_EventModel>
+
+@foreach (var item in Model)
+{
+    <div class="uk-width-large-1-4">
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.EventID</span>
+                    <span class="uk-text-small uk-text-muted">Mã sự kiện</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-width-large-1-4">
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading" style="color: rgba(0,123,255,1)">@item.EventName</span>
+                    <span class="uk-text-small uk-text-muted">Sự kiện tham gia</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-width-large-1-4">
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@item.StartDate.Value.ToString("dd/MM/yyyy")</span>
+                    <span class="uk-text-small uk-text-muted">Ngày bắt đầu</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="uk-width-large-1-4">
+        <ul class="md-list">
+            <li>
+                <div class="md-list-content">
+                    <span class="md-list-heading">@(item.EndDate == null ? "" : item.EndDate.Value.ToString("dd/MM/yyyy"))</span>
+                    <span class="uk-text-small uk-text-muted">Ngày kết thúc</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+}

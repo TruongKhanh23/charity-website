@@ -1,0 +1,20 @@
+﻿@model List<Model.EF.User>
+
+<li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+    @{
+        var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+    }
+    @if (session != null)
+    {
+        <a href="#" class="user_action_image">
+            <img class="md-user-image" src="@session.Image" alt="" />
+        </a>
+        <div class="uk-dropdown uk-dropdown-small">
+            <ul class="uk-nav js-uk-prevent">
+                <li><a href="/Admin/User/Details/@session.UserID">@session.Name</a></li>
+                <li><a href="/Admin/User/Edit/@session.UserID">Đổi mật khẩu</a></li>
+                <li><a href="/he-thong/dang-nhap">Thoát</a></li>
+            </ul>
+        </div>
+    }
+</li>

@@ -1,0 +1,72 @@
+﻿@model Model.EF.History
+
+@{
+    ViewBag.Title = "THÔNG TIN LỊCH SỬ HOẠT ĐỘNG";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+.
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ LỊCH SỬ HOẠT ĐỘNG</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÔNG TIN CHI TIẾT</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Tiêu đề<span class="req">*</span></label>
+                        <input readonly type="text" name="Name" id="Name" required class="md-input" value="@Model.Name" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Mô tả<span class="req">*</span></label>
+                        <input readonly type="text" name="Description" id="Description" required class="md-input" value="@Model.Description" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedDate" id="CreatedDate" required class="md-input" value="@Model.CreatedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Người khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedBy" id="CreatedBy" required class="md-input" value="@Model.CreatedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <p class="uk-width-medium-1-1 parsley-row">
+                        <label>Trạng thái sử dụng<span class="req">*</span></label>
+                        <input readonly type="button" @(Model.Status ? Html.Raw("class = 'md-btn md-btn-primary'") : Html.Raw("class = 'md-btn md-btn-danger'") ) data-val="true" name="Status" id="Status" value="@(Model.Status ? "Kích hoạt" : "Khóa")" data-md-icheck />
+                    </p>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    <a href="@Url.Action("Edit", "History", new { id = Model.ID})" class="md-btn md-btn-danger">CHỈNH SỬA</a>
+                    <a href="@Url.Action("Index", "History")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

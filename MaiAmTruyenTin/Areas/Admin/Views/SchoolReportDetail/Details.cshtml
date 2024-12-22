@@ -1,0 +1,116 @@
+﻿@model Model.EF.SchoolReportDetail
+
+@{
+    ViewBag.Title = "THÔNG TIN KẾT QUẢ HỌC TẬP";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">KẾT QUẢ HỌC TẬP | @Model.SchoolYear.ToString().ToUpper() | HỌC SINH: @Html.Action("ChildrenNameOfReport", new { id = Model.SchoolReportID })</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÔNG TIN CHI TIẾT</h3>
+            <div class="md-card-content">
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1 parsley-row">
+                        <label>Mã học bạ<span class="req">*</span></label>
+                        <input readonly type="text" class="md-input" value="@ViewBag.SchoolReportCode" />
+                    </div>
+                </div>
+
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Tên trường<span class="req">*</span></label>
+                        <input readonly type="text" name="SchoolName" id="SchoolName" required class="md-input" value="@Model.SchoolName" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Năm học<span class="req">*</span></label>
+                        <input readonly type="text" name="SchoolYear" id="SchoolYear" required class="md-input" value="@Model.SchoolYear" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Giáo viên chủ nhiệm<span class="req">*</span></label>
+                        <input readonly type="text" name="TeacherName" id="TeacherName" required class="md-input" value="@Model.TeacherName" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Nhận xét của giáo viên<span class="req">*</span></label>
+                        <input readonly type="text" name="TeacherEvaluation" id="TeacherEvaluation" required class="md-input" value="@Model.TeacherEvaluation" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Điểm trung bình học kỳ 1<span class="req">*</span></label>
+                        <input readonly type="text" name="Semester1" id="Semester1" required class="md-input" value="@Model.Semester1" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Điểm trung bình học kỳ 2<span class="req">*</span></label>
+                        <input readonly type="text" name="Semester2" id="Semester2" required class="md-input" value="@Model.Semester2" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Điểm trung bình năm học<span class="req">*</span></label>
+                        <input readonly type="text" name="FullYear" id="FullYear" required class="md-input" value="@Model.FullYear" />
+                    </div>
+                    <div class="uk-width-medium-1-2 parsley-row">
+                        <label>Xếp hạng<span class="req">*</span></label>
+                        <input readonly type="text" name="Rating" id="Rating" required class="md-input" value="@Model.Rating" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-4 parsley-row">
+                        <label>Ngày khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedDate" id="CreatedDate" required class="md-input" value="@Model.CreatedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-4 parsley-row">
+                        <label>Người khởi tạo<span class="req">*</span></label>
+                        <input readonly type="text" name="CreatedBy" id="CreatedBy" required class="md-input" value="@Model.CreatedBy" />
+                    </div>
+                    <div class="uk-width-medium-1-4 parsley-row">
+                        <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedDate" id="ModifiedDate" required class="md-input" value="@Model.ModifiedDate" />
+                    </div>
+                    <div class="uk-width-medium-1-4 parsley-row">
+                        <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                        <input readonly type="text" name="ModifiedBy" id="ModifiedBy" required class="md-input" value="@Model.ModifiedBy" />
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-medium-1-1">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <h3 class="heading_a uk-margin-small-bottom">
+                                    Hình ảnh xác thực (tải lên file PDF)
+                                </h3>
+                                <a href="/Admin/SchoolReportDetail/DownloadPDF?pdfFile=@Model.Image" target="_blank">Nhấn vào để xem hình ảnh xác thực hiện tại!</a>
+                                <div style="padding-top: 2%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="uk-input-group">
+                    @{ var link1 = "/he-thong/hoc-ba-chi-tiet/chinh-sua/" + Model.ID;
+                        var link2 = "/he-thong/hoc-ba/chi-tiet/" + Model.SchoolReportID;
+                    }
+                    <a href="@link1" class="md-btn md-btn-danger">CHỈNH SỬA</a>
+                    <a href="@link2" class="md-btn md-btn-warning">QUAY LẠI HỌC BẠ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>

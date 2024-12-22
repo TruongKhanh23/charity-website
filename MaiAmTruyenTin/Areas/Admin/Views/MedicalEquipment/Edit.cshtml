@@ -1,0 +1,107 @@
+﻿@model Model.EF.MedicalEquipment
+
+@{
+    ViewBag.Title = "SỬA DỤNG CỤ Y TẾ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var session = (MaiAmTruyenTin.Common.UserLogin)Session[MaiAmTruyenTin.Common.CommonConstants.USER_SESSION];
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div id="page_content_inner">
+    <h2 class="heading_b uk-margin-bottom">QUẢN LÝ DỤNG CỤ Y TẾ</h2>
+    <div class="md-card uk-margin-large-bottom">
+        <div class="md-card-content">
+            <h3 style="border: 1px solid rgb(33, 150, 243); padding: 15px 15px; background-color: rgb(33, 150, 243); color: white; font-size: 15px;">THÊM MỚI DỤNG CỤ Y TẾ</h3>
+            <div class="md-card-content">
+                @using (Html.BeginForm("Edit", "MedicalEquipment", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h5 style="color: rgb(124, 179, 66)">I. THÔNG TIN CƠ BẢN</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Tên thiết bị vật tư<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Name, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Loại thiết bị vật tư<span class="req">*</span></label>
+                            @Html.DropDownListFor(model => model.CategoryID, ViewBag.CateName as SelectList, "--Chọn phân loại dụng cụ y tế--", new { @class = "md-input", required = "required" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Công dụng<span class="req">*</span></label>
+                            <textarea cols="30" rows="2" class="md-input" id="Uses" name="Uses">@Model.Uses</textarea>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Đơn vị tính<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Unit, new { @class = "md-input form-control" })
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Số lượng<span class="req">*</span></label>
+                            @Html.TextBoxFor(model => model.Amount, new { @class = "md-input form-control" })
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Ngày sản xuất<span class="req">*</span></label>
+                            <input type="text" name="ManufacturingDate" id="ManufacturingDate" readonly required class="md-input" data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" value="@Model.ManufacturingDate" />
+                        </div>
+                        <div class="uk-width-medium-1-2 parsley-row">
+                            <label>Hạn sử dụng<span class="req">*</span></label>
+                            <input type="text" name="ExpiryDate" id="ExpiryDate" readonly required class="md-input" data-parsley-date data-uk-datepicker="{format:'MM/DD/YYYY'}" value="@Model.ExpiryDate" />
+                        </div>
+                    </div>
+                    <br />
+                    <h5 style="color: rgb(33, 150, 243)">II. THÔNG TIN KHỞI TẠO</h5>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <div class="md-input-wrapper md-input-filled">
+                                <label>Chỉnh sửa bởi<span class="req">*</span></label>
+                                <input type="text" name="ModifiedBy" id="ModifiedBy" readonly required class="md-input" readonly value="@session.Name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <div class="uk-width-medium-1-1 parsley-row">
+                            <label>Ngày chỉnh sửa<span class="req">*</span></label>
+                            <input type="text" name="ModifiedDate" id="ModifiedDate" class="md-input" value="@DateTime.Now.ToString()" />
+                        </div>
+                    </div>
+                    <div class="uk-grid">
+                        <p class="uk-width-medium-1-2 parsley-row">
+                            <label>Trạng thái sử dụng<span class="req">*</span></label>
+                            <input type="checkbox" id="Status" name="Status" data-md-icheck>
+                        </p>
+                    </div>
+                    <br />
+
+                    <div class="uk-input-group">
+                        <input type="submit" class="md-btn md-btn-primary" value="CẬP NHẬT" />
+                        <a href="@Url.Action("Index", "MedicalEquipment")" class="md-btn md-btn-danger">HỦY BỎ</a>
+                        <a href="@Url.Action("Index", "MedicalEquipment")" class="md-btn md-btn-warning">QUAY LẠI DANH SÁCH</a>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+</script>
+
